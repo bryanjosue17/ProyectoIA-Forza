@@ -46,10 +46,9 @@ kubectl apply -f k8s/apisix-configmap.yaml
 kubectl apply -f k8s/apisix.yaml
 
 # Backend
-cd PeoplePortal-BackEnd/k8s/configmap.yaml
+kubectl apply -f PeoplePortal-BackEnd/k8s/configmap.yaml
+kubectl apply -f PeoplePortal-BackEnd/k8s/sqlserver.yaml
 kubectl apply -f PeoplePortal-BackEnd/k8s/nats.yaml
-
-# SQL Server corre en local (Windows), no en K8s
 
 # Migraciones
 kubectl apply -f PeoplePortal-BackEnd/k8s/migration-job.yaml

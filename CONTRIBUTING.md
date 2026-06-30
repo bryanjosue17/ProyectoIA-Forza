@@ -7,7 +7,7 @@ Gracias por querer contribuir. Este documento describe el flujo recomendado para
    - `develop`: rama de integración donde se hace trabajo diario y PRs.
 
 2. Flujo de trabajo general
-   - Clona el monorepo con submódulos:
+   - Clona el repositorio raíz con submódulos:
 
      ```bash
      git clone --recurse-submodules https://github.com/bryanjosue17/ProyectoIA-Forza.git
@@ -35,7 +35,7 @@ Gracias por querer contribuir. Este documento describe el flujo recomendado para
 
    - Abrir Pull Request desde la rama del submódulo hacia `develop` del submódulo.
 
-   - Una vez mergeado el PR en el submódulo, desde la raíz del monorepo:
+   - Una vez mergeado el PR en el submódulo, desde la raíz del repositorio:
 
      ```bash
      git submodule foreach 'git fetch origin && git checkout develop && git pull origin develop'
