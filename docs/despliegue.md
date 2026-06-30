@@ -90,6 +90,7 @@ kubectl delete namespace peopleportal
 
 ## CI/CD
 
-El pipeline en `BackEnd/.github/workflows/ci.yml` automatiza:
-1. `build-test`: build .NET, tests, cobertura Codacy, escaneo Trivy
-2. `deploy-local`: en rama `develop`, build de imágenes y `kubectl apply` de todos los manifiestos
+Los pipelines en `.github/workflows/ci.yml` de cada repo automatizan:
+1. `build-test`: build, lint, tests con cobertura, Codacy, Trivy (backend)
+2. `docker`: build + push imágenes a GHCR (tags: branch + short-sha)
+3. No hay deploy a K8s en CI (runners no acceden al cluster Docker Desktop local)
