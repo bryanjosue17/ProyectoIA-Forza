@@ -1,6 +1,6 @@
 # Contribuir a ProyectoIA-Forza
 
-Gracias por querer contribuir. Este documento describe el flujo recomendado para trabajar en este monorepo con submódulos.
+Gracias por querer contribuir. Este documento describe el flujo recomendado para trabajar en el repositorio raíz con submódulos.
 
 1. Ramas
    - `main`: rama por defecto, contiene releases estables.

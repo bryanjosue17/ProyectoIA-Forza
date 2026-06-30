@@ -7,8 +7,8 @@ PeoplePortal es una plataforma de autoservicio para colaboradores y RRHH compues
 ```mermaid
 flowchart TB
     subgraph Browser["Navegador"]
-        ColabApp["FrontEnd-Coloborador\nReact 19 + Vite\n:30081"]
-        RRHHApp["FrontEnd-RRHH\nReact 19 + Vite\n:30082"]
+        ColabApp["PeoplePortal-FrontEnd-Colaborador\nReact 19 + Vite\n:30081"]
+        RRHHApp["PeoplePortal-FrontEnd-RRHH\nReact 19 + Vite\n:30082"]
     end
 
     subgraph K8s["Kubernetes — namespace: peopleportal"]

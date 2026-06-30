@@ -1,8 +1,7 @@
-# Carpetas locales (cada subm�dulo tiene su propio repo)
-PeoplePortal-BackEnd/
-BackEnd/
-PeoplePortal-FrontEnd-Colaborador/
-PeoplePortal-FrontEnd-RRHH/
+# Carpetas locales (cada submódulo tiene su propio repo)
+# Las carpetas de los submódulos se gestionan como submódulos Git y no deben
+# ser ignoradas aquí para permitir su seguimiento. Si quieres excluirlas,
+# maneja los backups localmente en vez de usar .gitignore.
 
 # Node modules y deps locales
 node_modules/
@@ -18,3 +17,6 @@ obj/
 # Env
 .env
 .env.local
+
+# Documentos temporales
+*.docx
