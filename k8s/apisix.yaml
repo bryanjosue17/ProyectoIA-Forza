@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apisix
+  namespace: peopleportal
+  labels:
+    app: apisix
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apisix
+  template:
+    metadata:
+      labels:
+        app: apisix
+    spec:
+      containers:
+        - name: apisix
+          image: apache/apisix:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9080
+            - containerPort: 9180
+          volumeMounts:
+            - name: apisix-config
+              mountPath: /usr/local/apisix/conf/config.yaml
+              subPath: config.yaml
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "300m"
+      volumes:
+        - name: apisix-config
+          configMap:
+            name: apisix-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apisix-service
+  namespace: peopleportal
+spec:
+  selector:
+    app: apisix
+  type: NodePort
+  ports:
+    - name: http
+      port: 80
+      targetPort: 9080
+      nodePort: 30090
+    - name: admin
+      port: 9180
+      targetPort: 9180

@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: peopleportal-ingress
+  namespace: peopleportal
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: peopleportal.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-colaborador-service
+                port:
+                  number: 80
+          - path: /rrhh
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-rrhh-service
+                port:
+                  number: 80
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: apisix-service
+                port:
+                  number: 80

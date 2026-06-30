@@ -1,0 +1,34 @@
+services:
+  api:
+    build:
+      context: ./BackEnd
+      dockerfile: Dockerfile
+      target: final
+    image: peopleportal-api:latest
+
+  migrations:
+    build:
+      context: ./BackEnd
+      dockerfile: Dockerfile
+      target: migrations
+    image: peopleportal-api-migrations:latest
+    profiles:
+      - tools
+
+  frontend-colaborador:
+    build:
+      context: ./PeoplePortal-FrontEnd-Colaborador
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ""
+        VITE_KEYCLOAK_URL: "http://localhost:30080"
+    image: peopleportal-frontend-colaborador:latest
+
+  frontend-rrhh:
+    build:
+      context: ./PeoplePortal-FrontEnd-RRHH
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ""
+        VITE_KEYCLOAK_URL: "http://localhost:30080"
+    image: peopleportal-frontend-rrhh:latest

@@ -1,0 +1,20 @@
+# Carpetas locales (cada submódulo tiene su propio repo)
+PeoplePortal-BackEnd/
+BackEnd/
+PeoplePortal-FrontEnd-Colaborador/
+PeoplePortal-FrontEnd-RRHH/
+
+# Node modules y deps locales
+node_modules/
+bin/
+obj/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Env
+.env
+.env.local
