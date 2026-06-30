@@ -46,19 +46,17 @@ kubectl apply -f k8s/apisix-configmap.yaml
 kubectl apply -f k8s/apisix.yaml
 
 # Backend
-kubectl apply -f BackEnd/k8s/configmap.yaml
-kubectl apply -f BackEnd/k8s/sqlserver.yaml
-kubectl apply -f BackEnd/k8s/nats.yaml
+cd PeoplePortal-BackEnd/k8s/configmap.yaml
+kubectl apply -f PeoplePortal-BackEnd/k8s/nats.yaml
 
-# Esperar SQL Server
-kubectl wait --for=condition=ready pod -l app=sqlserver -n peopleportal --timeout=300s
+# SQL Server corre en local (Windows), no en K8s
 
 # Migraciones
-kubectl apply -f BackEnd/k8s/migration-job.yaml
+kubectl apply -f PeoplePortal-BackEnd/k8s/migration-job.yaml
 kubectl wait --for=condition=complete job/peopleportal-migrations -n peopleportal --timeout=180s
 
 # API
-kubectl apply -f BackEnd/k8s/api.yaml
+kubectl apply -f PeoplePortal-BackEnd/k8s/api.yaml
 
 # Frontends
 kubectl apply -f PeoplePortal-FrontEnd-Colaborador/k8s/frontend-colaborador.yaml
