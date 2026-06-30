@@ -34,6 +34,30 @@ Crear una plataforma interna donde los colaboradores puedan acceder a su informa
 
 ---
 
+## Guía técnica principal
+
+Este README queda como documento principal del proyecto. La documentación técnica detallada se mantiene organizada en la carpeta `docs/`:
+
+- `docs/PLAN_IMPLEMENTACION.md` — estado de implementación unificado (backend, frontends e infraestructura)
+- `docs/arquitectura.md` — arquitectura global y componentes
+- `docs/despliegue.md` — guía de despliegue y operación
+- `docs/Brief_Capstone_ForzaTechAcademy_v1.docx` — brief original del proyecto
+
+### Resumen técnico consolidado
+
+- Arquitectura: Clean Architecture + CQRS en backend, dos frontends React 19 (Colaborador y RRHH).
+- Seguridad: Keycloak con JWT + PKCE S256, autorización por roles (`employee`, `jefe_inmediato`, `hr`, `nomina`, `admin`).
+- Infraestructura: Kubernetes local (namespace `peopleportal`), APISIX, NATS JetStream, SQL Server.
+- Calidad: tests backend + tests de ambos frontends en verde; cobertura global consolidada >= 60%.
+
+### Estado funcional actual
+
+- Portal Colaborador: perfil, documentos, solicitudes, beneficios, comunicados y dashboard.
+- Portal RRHH: empleados, detalle de empleado, documentos, solicitudes, beneficios, reportes y dashboard.
+- Backend API: endpoints de negocio principales operativos con validaciones y políticas de seguridad.
+
+---
+
 # Módulos principales
 
 ## 1. Mi perfil
