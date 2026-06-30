@@ -33,7 +33,7 @@ C4Context
   UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
 ```
 
-El sistema se despliega en **Docker Desktop Kubernetes** sobre el namespace `peopleportal`. APISIX actúa como único punto de entrada (`NodePort 30090`) y enruta las peticiones al backend. Keycloak provee autenticación SSO con flujo PKCE S256. NATS JetStream maneja eventos de dominio (ej. `hr.request.submitted`) para integración asíncrona.
+El sistema se despliega en **Docker Desktop Kubernetes** sobre el namespace `peopleportal`. Los frontends redirigen `/api/` directamente al backend via Nginx. APISIX está disponible como gateway alternativo (`NodePort 30090`). Keycloak provee autenticación SSO con flujo PKCE S256. NATS JetStream maneja eventos de dominio (ej. `hr.request.submitted`) para integración asíncrona.
 
 ---
 
@@ -59,7 +59,7 @@ flowchart LR
 
 **Referencias:**
 - **GitHub Container Registry (GHCR):** las imágenes se etiquetan y publican como `ghcr.io/peopleportal/api:latest`, etc.
-- **Codacy:** análisis de calidad y cobertura de código (`BackEnd/.codacy.yml`).
+- **Codacy:** análisis de calidad y cobertura de código (`PeoplePortal-BackEnd/.codacy.yml`).
 - **Trivy:** escaneo de vulnerabilidades en imágenes Docker.
 - **Branch protection:** la rama `main` está protegida; requiere pipeline verde para fusionar.
 
@@ -289,7 +289,7 @@ erDiagram
   Employee ||--o{ Employee : "reporta a (ManagerId)"
 ```
 
-**Descripción de entidades:** (basado en `BackEnd/src/PeoplePortal.Domain/Entities/`)
+**Descripción de entidades:** (basado en `PeoplePortal-BackEnd/src/PeoplePortal.Domain/Entities/`)
 
 | Entidad | Propósito | Estados clave |
 |---------|-----------|---------------|

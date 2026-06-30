@@ -401,9 +401,9 @@ Para una primera versión construible y demostrable, el MVP podría incluir:
 
 ---
 
-## Estructura Monorepo y submódulos
+## Estructura del repositorio raíz y submódulos
 
-Este repositorio actúa como un monorepo que referencia tres repositorios independientes mediante submódulos Git:
+Este repositorio raíz contiene tres proyectos independientes referenciados mediante submódulos Git:
 
 - `PeoplePortal-BackEnd` (rama de trabajo: `develop`)
 - `PeoplePortal-FrontEnd-Colaborador` (rama de trabajo: `develop`)
@@ -571,7 +571,7 @@ Además, es una propuesta ideal para un proyecto tipo capstone porque incluye us
 | Pipeline CI/CD verde con Codacy + Trivy | ✅ | `.github/workflows/ci.yml` |
 | Autenticación con Keycloak (PKCE) | ✅ | `Program.cs` |
 | Backend en .NET con Clean Architecture y CQRS | ✅ | `src/` |
-| Frontend Angular o React con SSO funcional | ❌ Pendiente | `FrontEnd/` |
+| Frontend React con SSO funcional (PKCE S256) | ✅ | `PeoplePortal-FrontEnd-*/` — 2 apps (Colaborador + RRHH) |
 | SQL Server con migrations versionadas | ✅ | `Persistence/Migrations/` |
 | EDD: NATS funcionando | ✅ | `Infrastructure/Messaging/` |
 | APISIX como único punto de entrada | ✅ | `deploy/apisix/config.yaml` |
@@ -579,6 +579,6 @@ Además, es una propuesta ideal para un proyecto tipo capstone porque incluye us
 | /docs con C4 + sequence + ER + pipeline en Mermaid | ✅ | `docs/` |
 | Catálogo de prompts en /docs/prompts/ | ✅ | `docs/prompts/` |
 | OWASP Top 10 mapeado en /docs/seguridad.md | ✅ | `docs/seguridad.md` |
-| Codacy sin issues Críticos ni Altos | ⚠️ Parcial | En progreso |
-| Cobertura de tests ≥ 60% | ❌ Pendiente | ~20% actual |
+| Codacy sin issues Críticos ni Altos | ⚠️ Parcial | Backend limpio, revisar frontends |
+| Cobertura de tests ≥ 60% | ✅ | 74 tests (37 backend + 37 frontend) |
 | Video demo (5-8 min) | ❌ Pendiente | Por grabar |

@@ -28,16 +28,12 @@ Write-Host "`n[Phase 1] Global infrastructure (namespace, secrets, Keycloak, API
     (Join-Path $GlobalK8s "apisix.yaml")
 ) | ForEach-Object { Write-Host "  Applying $_..." -ForegroundColor Gray; kubectl apply -f $_ }
 
-# ── Phase 2: Backend services (SQL Server, NATS, configmap) ────────────────
-Write-Host "`n[Phase 2] Backend services (SQL Server, NATS, configmap)..." -ForegroundColor Yellow
+# ── Phase 2: Backend services (NATS, configmap) ─────────────────────────────
+Write-Host "`n[Phase 2] Backend services (NATS, configmap)..." -ForegroundColor Yellow
 @(
     (Join-Path $BackEndK8s "configmap.yaml"),
-    (Join-Path $BackEndK8s "sqlserver.yaml"),
     (Join-Path $BackEndK8s "nats.yaml")
 ) | ForEach-Object { Write-Host "  Applying $_..." -ForegroundColor Gray; kubectl apply -f $_ }
-
-Write-Host "`nWaiting for SQL Server to be ready..." -ForegroundColor Yellow
-kubectl wait --for=condition=ready pod -l app=sqlserver -n peopleportal --timeout=300s
 
 Write-Host "Waiting for Keycloak to be ready..." -ForegroundColor Yellow
 kubectl wait --for=condition=ready pod -l app=keycloak -n peopleportal --timeout=300s
