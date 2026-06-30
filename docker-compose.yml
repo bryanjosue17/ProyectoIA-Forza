@@ -1,14 +1,14 @@
 services:
   api:
     build:
-      context: ./BackEnd
+      context: ./PeoplePortal-BackEnd
       dockerfile: Dockerfile
       target: final
     image: peopleportal-api:latest
 
   migrations:
     build:
-      context: ./BackEnd
+      context: ./PeoplePortal-BackEnd
       dockerfile: Dockerfile
       target: migrations
     image: peopleportal-api-migrations:latest

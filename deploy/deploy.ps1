@@ -7,7 +7,7 @@ param(
 $ErrorActionPreference = "Stop"
 $Root       = Split-Path $PSScriptRoot -Parent
 $GlobalK8s  = Join-Path $Root "k8s"
-$BackEndK8s = Join-Path $Root "BackEnd\k8s"
+$BackEndK8s = Join-Path $Root "PeoplePortal-BackEnd\k8s"
 $ColabK8s   = Join-Path $Root "PeoplePortal-FrontEnd-Colaborador\k8s"
 $RrhhK8s    = Join-Path $Root "PeoplePortal-FrontEnd-RRHH\k8s"
 

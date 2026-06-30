@@ -44,7 +44,7 @@ flowchart TB
 
 ```
 ProyectoIA-Forza/
-├── BackEnd/                    ← .NET 9 API (Clean Architecture)
+├── PeoplePortal-BackEnd/       ← .NET 9 API (Clean Architecture)
 │   ├── docs/                   ← Documentación backend (arquitectura, BD, seguridad)
 │   ├── k8s/                    ← Manifiestos backend (api, sqlserver, nats, migrations)
 │   ├── src/                    ← Código fuente (Api, Application, Domain, Infrastructure)
