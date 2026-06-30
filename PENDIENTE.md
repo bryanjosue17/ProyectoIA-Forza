@@ -190,9 +190,9 @@ Agregado `@vitest/coverage-v8` + `test:coverage` script + coverage config con co
 
 ---
 
-## ~~11. Grid breakpoint lg=6 en todos los formularios (Baja)~~ ✅
+## ~~11. Grid breakpoint lg=12 (full width) en todos los formularios (Baja)~~ ✅
 
-Cambiados todos los campos de formularios de `xs={12} sm={6}` a `xs={12} sm={12} lg={6}` para que ocupen el ancho completo en tablets y se dividan en 2 columnas solo en pantallas grandes (≥1200px). Multiline siempre `xs={12}`. Se removió `px: 3` del contenedor en Requests.jsx para eliminar doble indentación.
+Cambiados todos los campos de formularios a `xs={12}` para que ocupen el 100% del ancho del Card en todos los tamaños de pantalla. Multiline siempre `xs={12}`. Se removió `px: 3` del contenedor en Requests.jsx. PRs mergeados a main y deployados a K8s.
 
 **Frontend Colaborador:** Profile.jsx (4 campos), Requests.jsx (6 campos en 3 forms)
 **Frontend RRHH:** Announcements.jsx (3 campos), Benefits.jsx (2 campos), EmployeeDetail.jsx (4 campos), Employees.jsx (12 campos), Documents.jsx (5 campos)
