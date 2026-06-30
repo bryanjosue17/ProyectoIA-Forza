@@ -401,6 +401,76 @@ Para una primera versión construible y demostrable, el MVP podría incluir:
 
 ---
 
+## Estructura Monorepo y submódulos
+
+Este repositorio actúa como un monorepo que referencia tres repositorios independientes mediante submódulos Git:
+
+- `PeoplePortal-BackEnd` (rama de trabajo: `develop`)
+- `PeoplePortal-FrontEnd-Colaborador` (rama de trabajo: `develop`)
+- `PeoplePortal-FrontEnd-RRHH` (rama de trabajo: `develop`)
+
+Recomendación de ramas:
+
+- `main`: rama por defecto (estable)
+- `develop`: rama de trabajo donde se integran cambios antes de pasarlos a `main`
+
+Clonar este monorepo (incluyendo submódulos):
+
+1) Clonar con submódulos recursivos:
+
+```bash
+git clone --recurse-submodules https://github.com/bryanjosue17/ProyectoIA-Forza.git
+```
+
+2) Si ya clonaste sin submódulos, inicializarlos y actualizarlos:
+
+```bash
+git submodule update --init --recursive
+```
+
+Actualizar submódulos a la última rama `develop` remota:
+
+```bash
+# Desde la raíz del monorepo
+git submodule foreach 'git fetch origin && git checkout develop && git pull origin develop'
+```
+
+Trabajar en submódulos (flujo sugerido):
+
+1. Entrar en el submódulo correspondiente:
+
+```bash
+cd PeoplePortal-BackEnd
+# o PeoplePortal-FrontEnd-Colaborador, PeoplePortal-FrontEnd-RRHH
+```
+
+2. Crear/usar la rama `develop` localmente, realizar cambios y pushear:
+
+```bash
+git checkout develop
+git pull origin develop
+# hacer cambios
+git add .
+git commit -m "Describe cambios"
+git push origin develop
+```
+
+3. Volver al monorepo y commitear la referencia del submódulo (si cambiaste commit dentro del submódulo):
+
+```bash
+cd ..
+git add PeoplePortal-BackEnd PeoplePortal-FrontEnd-Colaborador PeoplePortal-FrontEnd-RRHH
+git commit -m "Update submodule refs"
+git push origin develop
+```
+
+Notas:
+
+- Los submódulos mantienen su historial en sus propios repositorios.
+- Para clonar y colaborar cómodamente, usa `--recurse-submodules` o ejecuta `git submodule update --init --recursive` tras clonar.
+- Si prefieres no usar submódulos, considera `git subtree` o un monorepo con fusión de historiales.
+
+
 # Flujo principal del colaborador
 
 1. El colaborador inicia sesión.
