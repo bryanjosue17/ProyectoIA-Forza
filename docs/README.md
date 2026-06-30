@@ -70,7 +70,7 @@ flowchart LR
 ```mermaid
 mindmap
   root((PeoplePortal Tests))
-    Backend (37 tests)
+    Backend (49 tests)
       Domain (25 tests)
         EmployeeTests[5 tests<br/>Creación, validación, actualización]
         HrRequestTests[8 tests<br/>Vacaciones, constancias, vouchers, cancelación]
@@ -82,6 +82,11 @@ mindmap
         EmployeeHandlerTests[3 tests<br/>CreateEmployee, UpdateMyProfile]
         DocumentHandlerTests[4 tests<br/>UploadDocument, UpdateStatus]
         RequestHandlersTests[5 tests<br/>Vacation, Certificate, Status, Query]
+      Controllers (7 tests)
+        AnnouncementHandlerTests[3 tests<br/>Create, GetActive, invalid type]
+        BenefitHandlerTests[3 tests<br/>GetActive, empty, all fields]
+      Integration (5 tests)
+        BasicTests[5 tests<br/>Entity creation, enums, status]
     Frontend Colaborador (19 tests)
       Dashboard.test[5 tests<br/>Welcome, API fail, stat cards, values, empty state]
       Layout.test[6 tests<br/>Title, subtitle, nav items, user, children, active route]

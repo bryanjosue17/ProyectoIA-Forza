@@ -139,55 +139,40 @@ gh api repos/bryanjosue17/<repo>/branches/develop/protection --method PUT --inpu
 
 ---
 
-## ~~6. CD Pipeline (Media)~~ ✅
+## ~~6. CI Pipeline (Media)~~ ✅
 
-Pipeline actualizado en `.github/workflows/ci.yml`: corrige path `k8s/api-deployment.yaml` → `k8s/api.yaml`, elimina `sqlserver.yaml`, añade `imagePullPolicy: Always`.
+Backend CI tiene 2 jobs: `build-test` (build, test, Codacy, Trivy) + `docker` (build+push a GHCR). Sin deploy a K8s (runners no acceden al cluster local).
 
-**Pasos:**
+Frontend CIs replican misma estructura:
+- `build-test`: lint + test with coverage + build
+- `docker`: build+push imagen a GHCR
 
-1. En el root `.github/workflows/ci.yml`, agregar job `deploy`:
-   ```yaml
-   deploy:
-     needs: build-test
-     if: github.ref == 'refs/heads/develop'
-     runs-on: ubuntu-latest
-     steps:
-       - uses: actions/checkout@v4
-         with:
-           submodules: recursive
-       - name: Build images
-         run: |
-           docker build -t ghcr.io/bryanjosue17/peopleportal-api:${{ github.sha }} ./PeoplePortal-BackEnd
-           docker build -t ghcr.io/bryanjosue17/peopleportal-api-migrations:${{ github.sha }} -f PeoplePortal-BackEnd/Dockerfile --target migrations ./PeoplePortal-BackEnd
-           docker build -t ghcr.io/bryanjosue17/peopleportal-frontend-colaborador:${{ github.sha }} ./PeoplePortal-FrontEnd-Colaborador
-           docker build -t ghcr.io/bryanjosue17/peopleportal-frontend-rrhh:${{ github.sha }} ./PeoplePortal-FrontEnd-RRHH
-       - name: Push to GHCR
-         run: |
-           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-           docker push ghcr.io/bryanjosue17/peopleportal-api:${{ github.sha }}
-           # ... push todas las imágenes
-   ```
-
-2. Configurar `imagePullPolicy: Always` en los manifiestos K8s (o usar tags dinámicos)
-3. Agregar step de `kubectl set image` para actualizar deployments
+Los 3 repos publican imágenes en GHCR con tags: `${branch}` y `${short-sha}`.
 
 ---
 
 ## ~~7. Conventional Commits (Baja)~~ ✅
 
-Archivo `.gitmessage` creado en la raíz. Ejecutar `git config commit.template .gitmessage` para activarlo.
+Archivo `.gitmessage` creado en raíz y BackEnd. Ejecutar `git config commit.template .gitmessage` para activarlo.
+
+```
+<type>(<scope>): <subject>
+
+<body>
+```
+
+Tipos: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`, `build`, `ci`
+
+---
+
+## 8. Codacy en Frontends (Media) — PENDIENTE ✅
+
+Agregado `@vitest/coverage-v8` + `test:coverage` script + coverage config con cobertura reporter en ambos frontends. CI reporta cobertura a Codacy.
 
 **Pasos:**
 
-1. Agregar `.gitmessage` template en cada repo:
-   ```
-   <type>(<scope>): <subject>
-   <BLANK LINE>
-   <body>
-   ```
-2. Configurar template:
-   ```powershell
-   git config commit.template .gitmessage
-   ```
-3. Tipos: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`, `build`, `ci`
-4. Commits futuros deben seguir el formato (los ya hechos se pueden ignorar)
+1. Agregar `@vitest/coverage-v8` a `devDependencies` + script `test:coverage` en ambos `package.json`
+2. Configurar `vitest.config.js` con `coverage.provider: 'v8'` y `reporter: ['text', 'cobertura']`
+3. En CI: cambiar test a `npm run test:coverage`, agregar step Codacy reporter + upload artifact
+4. Commit inicial falló por peer dep mismatch (`@vitest/coverage-v8@3.x` vs `vitest@4.x`). Corregido a `^4.1.9`.
+5. Lock files actualizados con `npm install` local.
