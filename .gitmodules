@@ -1,0 +1,10 @@
+[submodule "PeoplePortal-BackEnd"]
+	path = PeoplePortal-BackEnd
+	url = https://github.com/bryanjosue17/PeoplePortal-BackEnd.git
+	branch = develop
+[submodule "PeoplePortal-FrontEnd-Colaborador"]
+	path = PeoplePortal-FrontEnd-Colaborador
+	url = https://github.com/bryanjosue17/PeoplePortal-FrontEnd-Colaborador.git
+[submodule "PeoplePortal-FrontEnd-RRHH"]
+	path = PeoplePortal-FrontEnd-RRHH
+	url = https://github.com/bryanjosue17/PeoplePortal-FrontEnd-RRHH.git
