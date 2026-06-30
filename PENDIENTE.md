@@ -176,3 +176,14 @@ Agregado `@vitest/coverage-v8` + `test:coverage` script + coverage config con co
 3. En CI: cambiar test a `npm run test:coverage`, agregar step Codacy reporter + upload artifact
 4. Commit inicial falló por peer dep mismatch (`@vitest/coverage-v8@3.x` vs `vitest@4.x`). Corregido a `^4.1.9`.
 5. Lock files actualizados con `npm install` local.
+
+---
+
+## ~~9. Route Guard FE-RRHH (Alta)~~ ✅
+
+`ProtectedRoute` en `src/components/ProtectedRoute.jsx` verifica que el usuario tenga rol `hr` o `admin`. Si no, muestra pantalla de **Acceso Denegado** con link al portal Colaborador (puerto 30081). Implementado, deployado, PR mergeado a main.
+
+**Archivos:**
+- `src/components/ProtectedRoute.jsx` — componente guard con loading spinner
+- `src/pages/AccessDenied/AccessDenied.jsx` — pantalla de acceso denegado
+- `src/App.jsx` — Layout + Routes envueltos en `ProtectedRoute`
