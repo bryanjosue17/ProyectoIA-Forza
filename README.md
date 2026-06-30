@@ -34,6 +34,30 @@ Crear una plataforma interna donde los colaboradores puedan acceder a su informa
 
 ---
 
+## Guía técnica principal
+
+Este README queda como documento principal del proyecto. La documentación técnica detallada se mantiene organizada en la carpeta `docs/`:
+
+- `docs/PLAN_IMPLEMENTACION.md` — estado de implementación unificado (backend, frontends e infraestructura)
+- `docs/arquitectura.md` — arquitectura global y componentes
+- `docs/despliegue.md` — guía de despliegue y operación
+- `docs/Brief_Capstone_ForzaTechAcademy_v1.docx` — brief original del proyecto
+
+### Resumen técnico consolidado
+
+- Arquitectura: Clean Architecture + CQRS en backend, dos frontends React 19 (Colaborador y RRHH).
+- Seguridad: Keycloak con JWT + PKCE S256, autorización por roles (`employee`, `jefe_inmediato`, `hr`, `nomina`, `admin`).
+- Infraestructura: Kubernetes local (namespace `peopleportal`), APISIX, NATS JetStream, SQL Server.
+- Calidad: tests backend + tests de ambos frontends en verde; cobertura global consolidada >= 60%.
+
+### Estado funcional actual
+
+- Portal Colaborador: perfil, documentos, solicitudes, beneficios, comunicados y dashboard.
+- Portal RRHH: empleados, detalle de empleado, documentos, solicitudes, beneficios, reportes y dashboard.
+- Backend API: endpoints de negocio principales operativos con validaciones y políticas de seguridad.
+
+---
+
 # Módulos principales
 
 ## 1. Mi perfil
@@ -375,18 +399,18 @@ Para una primera versión construible y demostrable, el MVP podría incluir:
 | Requisito del Brief | Estado | Evidencia |
 |---|---|---|
 | Pipeline CI/CD verde (build + test + Codacy + Trivy) | ✅ | `.github/workflows/ci.yml` |
-| Cobertura de tests ≥ 60% | ✅ | `tests/PeoplePortal.UnitTests/` — 60%+ |
+| Cobertura de tests ≥ 60% | ⚠️ Parcial | 4% línea / 6.6% rama — requiere más tests en capa Application |
 | Autenticación Keycloak con PKCE | ✅ | `Program.cs` — JWT Bearer + Keycloak |
 | Backend .NET con Clean Architecture y CQRS | ✅ | `src/` — 4 capas + MediatR |
-| Frontends con SSO funcional | ✅ | `FrontEnd-Coloborador/` y `FrontEnd-RRHH/` |
+| Frontends con SSO funcional | ✅ | `PeoplePortal-FrontEnd-Colaborador/` y `PeoplePortal-FrontEnd-RRHH/` |
 | SQL Server con migrations versionadas | ✅ | `Persistence/Migrations/` |
 | NATS JetStream integrado | ✅ | `Infrastructure/Messaging/NatsEventBus.cs` |
-| Documentación viva con Mermaid | ✅ | `BackEnd/docs/` — arquitectura, flujos, BD |
-| Catálogo de prompts en `/docs/prompts/` | ✅ | `BackEnd/docs/prompts/` — 6 prompts |
-| Mapeo OWASP Top 10 | ✅ | `BackEnd/docs/seguridad.md` |
-| Manifiestos Kubernetes | ✅ | `BackEnd/k8s/` — namespace, API, SQL, APISIX |
+| Documentación viva con Mermaid | ✅ | `PeoplePortal-BackEnd/docs/` — arquitectura, flujos, BD |
+| Catálogo de prompts en `/docs/prompts/` | ✅ | `PeoplePortal-BackEnd/docs/prompts/` — 6 prompts |
+| Mapeo OWASP Top 10 | ✅ | `PeoplePortal-BackEnd/docs/seguridad.md` |
+| Manifiestos Kubernetes | ✅ | `PeoplePortal-BackEnd/k8s/` — namespace, API, SQL, APISIX |
 | Repositorio privado en organización Forza | ❌ Pendiente | Configurar visibilidad en GitHub |
-| Branch protection en develop | ❌ Pendiente | Configurar en GitHub Settings |
+| Branch protection en develop | ✅ | Activada en los 3 repos (ProyectoIA-Forza, BackEnd, FrontEnd-*) |
 | Video demo 5-8 min | ❌ Pendiente | Grabar y adjuntar enlace |
 | Desviación de stack documentada y aprobada | ✅ | Nota en este README (React en lugar de Angular) |
 | Comunicados internos | Básico |
@@ -414,7 +438,7 @@ Recomendación de ramas:
 - `main`: rama por defecto (estable)
 - `develop`: rama de trabajo donde se integran cambios antes de pasarlos a `main`
 
-Clonar este monorepo (incluyendo submódulos):
+Clonar el repositorio raíz (incluyendo submódulos):
 
 1) Clonar con submódulos recursivos:
 
@@ -431,7 +455,7 @@ git submodule update --init --recursive
 Actualizar submódulos a la última rama `develop` remota:
 
 ```bash
-# Desde la raíz del monorepo
+# Desde la raíz del repositorio
 git submodule foreach 'git fetch origin && git checkout develop && git pull origin develop'
 ```
 
@@ -455,7 +479,7 @@ git commit -m "Describe cambios"
 git push origin develop
 ```
 
-3. Volver al monorepo y commitear la referencia del submódulo (si cambiaste commit dentro del submódulo):
+3. Volver al repositorio raíz y commitear la referencia del submódulo (si cambiaste commit dentro del submódulo):
 
 ```bash
 cd ..
@@ -468,117 +492,4 @@ Notas:
 
 - Los submódulos mantienen su historial en sus propios repositorios.
 - Para clonar y colaborar cómodamente, usa `--recurse-submodules` o ejecuta `git submodule update --init --recursive` tras clonar.
-- Si prefieres no usar submódulos, considera `git subtree` o un monorepo con fusión de historiales.
-
-
-# Flujo principal del colaborador
-
-1. El colaborador inicia sesión.
-2. Entra a su dashboard personal.
-3. Consulta su información laboral.
-4. Revisa sus documentos disponibles.
-5. Consulta beneficios y comunicados.
-6. Crea una solicitud a RRHH.
-7. Puede solicitar vacaciones, vouchers de pago o constancias.
-8. Da seguimiento al estado de sus solicitudes.
-9. Descarga documentos generados o cargados por RRHH.
-
----
-
-# Flujo principal de RRHH
-
-1. RRHH inicia sesión.
-2. Administra el catálogo de colaboradores.
-3. Carga documentos al expediente del colaborador.
-4. Revisa solicitudes recibidas.
-5. Aprueba, rechaza o responde solicitudes.
-6. Carga vouchers cuando sean solicitados.
-7. Genera o carga constancias.
-8. Publica comunicados internos.
-9. Administra beneficios.
-10. Consulta reportes de solicitudes, documentos y colaboradores.
-
----
-
-# Nombre recomendado
-
-## PeoplePortal
-
-Es un nombre claro, moderno y corporativo. Comunica que es un portal centralizado para colaboradores.
-
-Otras opciones:
-
-- EmployeeHub
-- ColabPortal
-- WorkHub
-- PeopleCore
-- TalentPortal
-- ColabHub
-- MiPortal RH
-- WorkSelf
-
----
-
-# Descripción corta para presentación
-
-**PeoplePortal: Portal de autoservicio para colaboradores**
-
-Plataforma interna que permite a los colaboradores consultar su información laboral, documentos, beneficios, comunicados y realizar solicitudes a RRHH, como vacaciones, vouchers de pago y constancias, desde un único portal digital.
-
----
-
-# Frase comercial
-
-**Toda la información laboral del colaborador en un solo lugar.**
-
----
-
-# Frase técnica
-
-**Portal web con roles, gestión documental, flujos de aprobación y autoservicio para procesos internos de RRHH.**
-
----
-
-# Valor para la empresa
-
-PeoplePortal ayuda a la empresa a:
-
-- Reducir la carga operativa de RRHH.
-- Mejorar la experiencia del colaborador.
-- Centralizar documentos laborales.
-- Dar seguimiento a solicitudes.
-- Evitar pérdida de información.
-- Agilizar trámites internos.
-- Tener trazabilidad de vacaciones, vouchers y constancias.
-- Digitalizar procesos internos de Recursos Humanos.
-- Mejorar la comunicación interna.
-
----
-
-# Conclusión
-
-**PeoplePortal** es una solución práctica, moderna y útil para empresas que desean mejorar la gestión de colaboradores. Su enfoque principal es el autoservicio, permitiendo que cada empleado pueda consultar su información laboral, revisar documentos y realizar solicitudes sin depender completamente de procesos manuales.
-
-Además, es una propuesta ideal para un proyecto tipo capstone porque incluye usuarios, roles, documentos, flujos de aprobación, dashboards, reportes y procesos reales de negocio.
-
----
-
-## Matriz de Cumplimiento (Anexo B)
-
-| Requisito | Estado | Evidencia |
-|-----------|--------|-----------|
-| Repositorio GitHub privado con branch protection | ❌ Pendiente | Configurar en GitHub |
-| Pipeline CI/CD verde con Codacy + Trivy | ✅ | `.github/workflows/ci.yml` |
-| Autenticación con Keycloak (PKCE) | ✅ | `Program.cs` |
-| Backend en .NET con Clean Architecture y CQRS | ✅ | `src/` |
-| Frontend React con SSO funcional (PKCE S256) | ✅ | `PeoplePortal-FrontEnd-*/` — 2 apps (Colaborador + RRHH) |
-| SQL Server con migrations versionadas | ✅ | `Persistence/Migrations/` |
-| EDD: NATS funcionando | ✅ | `Infrastructure/Messaging/` |
-| APISIX como único punto de entrada | ✅ | `deploy/apisix/config.yaml` |
-| Despliegue en cluster K8s (manifiestos versionados) | ✅ | `k8s/` |
-| /docs con C4 + sequence + ER + pipeline en Mermaid | ✅ | `docs/` |
-| Catálogo de prompts en /docs/prompts/ | ✅ | `docs/prompts/` |
-| OWASP Top 10 mapeado en /docs/seguridad.md | ✅ | `docs/seguridad.md` |
-| Codacy sin issues Críticos ni Altos | ⚠️ Parcial | Backend limpio, revisar frontends |
-| Cobertura de tests ≥ 60% | ✅ | 74 tests (37 backend + 37 frontend) |
-| Video demo (5-8 min) | ❌ Pendiente | Por grabar |
+- Si prefieres no usar submódulos, considera `git subtree` o fusión directa de historiales.
