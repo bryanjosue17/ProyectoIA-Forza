@@ -1,8 +1,8 @@
 # PeoplePortal — Checklist Pendiente
 
-## 1. Seed Data (Alta)
+## ~~1. Seed Data (Alta)~~ ✅
 
-Crear registros en PeoplePortalDb para que los usuarios test tengan empleados asociados.
+Creados 4 empleados vía API: EMP001 (Juan Pérez/testuser), EMP002 (María López/testmanager), EMP003 (Carlos Ruiz/testhr), EMP004 (Admin Sistema/admin). Juan Pérez reporta a María López.
 
 **Pasos:**
 
@@ -32,9 +32,9 @@ GO
 
 ---
 
-## 2. Probar Eventos NATS (Alta)
+## ~~2. Probar Eventos NATS (Alta)~~ ✅
 
-Verificar que al crear una solicitud (HR Request) se publique un evento en NATS.
+Creada solicitud de vacaciones para testuser. Stream `peopleportal-events` tiene 1 mensaje en subject `hr.request.submitted` con el payload correcto (Id, EmployeeId, Type, CreatedAtUtc).
 
 **Pasos:**
 
@@ -75,7 +75,7 @@ Verificar que al crear una solicitud (HR Request) se publique un evento en NATS.
 
 ---
 
-## 3. Video Demo (Alta)
+## 3. Video Demo (Alta) — PENDIENTE
 
 Grabar 5-8 min mostrando:
 
