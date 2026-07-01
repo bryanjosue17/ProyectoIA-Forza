@@ -1,56 +1,102 @@
 # Contribuir a ProyectoIA-Forza
 
-Gracias por querer contribuir. Este documento describe el flujo recomendado para trabajar en el repositorio raíz con submódulos.
+Gracias por contribuir. Este documento describe el flujo de trabajo recomendado para el repositorio raíz y sus submódulos.
 
-1. Ramas
-   - `main`: rama por defecto, contiene releases estables.
-   - `develop`: rama de integración donde se hace trabajo diario y PRs.
+---
 
-2. Flujo de trabajo general
-   - Clona el repositorio raíz con submódulos:
+## Ramas
 
-     ```bash
-     git clone --recurse-submodules https://github.com/bryanjosue17/ProyectoIA-Forza.git
-     cd ProyectoIA-Forza
-     git checkout develop
-     ```
+| Rama | Propósito |
+|---|---|
+| `main` | Rama estable — solo recibe merges desde `develop` |
+| `develop` | Rama de integración — trabajo diario y PRs |
+| `feat/<nombre>` | Features nuevas, se crean desde `develop` |
+| `fix/<nombre>` | Correcciones de bugs, se crean desde `develop` |
 
-   - Si ya clonaste sin submódulos:
+---
 
-     ```bash
-     git submodule update --init --recursive
-     ```
+## Flujo de trabajo
 
-   - Para trabajar en un submódulo:
+### 1. Clonar con submódulos
 
-     ```bash
-     cd PeoplePortal-BackEnd
-     git checkout develop
-     git pull origin develop
-     # crear rama feature
-     git checkout -b feature/mi-cambio
-     # hacer cambios, commit, push
-     git push origin feature/mi-cambio
-     ```
+```bash
+git clone --recurse-submodules https://github.com/bryanjosue17/ProyectoIA-Forza.git
+cd ProyectoIA-Forza
+git checkout develop
+```
 
-   - Abrir Pull Request desde la rama del submódulo hacia `develop` del submódulo.
+### 2. Trabajar en un submódulo
 
-   - Una vez mergeado el PR en el submódulo, desde la raíz del repositorio:
+```bash
+cd PeoplePortal-BackEnd   # o FrontEnd-Colaborador / FrontEnd-RRHH
+git checkout develop
+git pull origin develop
+git checkout -b feat/mi-cambio
+# ... hacer cambios ...
+git add .
+git commit -m "feat(api): descripción del cambio"
+git push origin feat/mi-cambio
+```
 
-     ```bash
-     git submodule foreach 'git fetch origin && git checkout develop && git pull origin develop'
-     git add PeoplePortal-BackEnd PeoplePortal-FrontEnd-Colaborador PeoplePortal-FrontEnd-RRHH
-     git commit -m "Update submodule refs"
-     git push origin develop
-     ```
+### 3. Abrir Pull Request
 
-3. Revisión y protección de ramas
-   - La rama `develop` está protegida: requiere PR para merges y revisiones.
+Abrir PR en el repositorio del **submódulo** desde `feat/mi-cambio` hacia `develop`.  
+Requisitos para merge:
+- CI/CD pipeline en verde (build + tests + lint + Codacy + Trivy)
+- Code review de al menos 1 persona
+- Sin issues Críticos ni Altos en Codacy
 
-4. Estilo de commits
-   - Usa mensajes claros: `Tipo: descripción breve` (ej. `Fix: corregir validación de token`).
+### 4. Actualizar referencia en la raíz
 
-5. Notas
-   - Los submódulos conservan su propio historial y políticas; revisa sus `README` y reglas internas.
+Una vez mergeado el PR en el submódulo:
 
-Gracias por contribuir — si necesitas plantillas de PR o convenciones adicionales, proponlo en un issue.
+```bash
+# Desde la raíz del repositorio
+git submodule foreach 'git fetch origin && git checkout develop && git pull origin develop'
+git add PeoplePortal-BackEnd PeoplePortal-FrontEnd-Colaborador PeoplePortal-FrontEnd-RRHH
+git commit -m "chore: update submodule refs"
+git push origin develop
+```
+
+---
+
+## Conventional Commits
+
+Formato: `<tipo>(<alcance>): <descripción breve>`
+
+| Tipo | Uso |
+|---|---|
+| `feat` | Nueva funcionalidad |
+| `fix` | Corrección de bug |
+| `refactor` | Cambio de código sin nueva funcionalidad ni bug fix |
+| `test` | Agregar o modificar tests |
+| `docs` | Cambios en documentación |
+| `chore` | Mantenimiento, CI/CD, configuraciones |
+| `style` | Formato o linting (sin cambio de lógica) |
+| `perf` | Mejora de rendimiento |
+
+### Ejemplos
+
+```
+feat(api): add employee profile endpoint
+fix(db): correct migration column type
+docs(readme): update setup instructions
+chore(ci): add trivy scan to pipeline
+test(requests): add handler unit tests
+```
+
+---
+
+## Protección de ramas
+
+- La rama `develop` está protegida en los 3 repositorios de código.
+- Se requiere PR + aprobación para hacer merge.
+- No se permiten force-push en `develop` ni `main`.
+
+---
+
+## Notas sobre submódulos
+
+- Cada submódulo mantiene su propio historial de commits, ramas y políticas.
+- Revisa el `README.md` de cada submódulo para ver sus instrucciones específicas.
+- Los submódulos tienen su propia carpeta `docs/` con documentación técnica interna.

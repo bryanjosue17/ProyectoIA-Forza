@@ -1,12 +1,12 @@
 # PeoplePortal — Arquitectura Global
 
-## Visión general
+## Visión general del sistema
 
-PeoplePortal es una plataforma de autoservicio para colaboradores y RRHH compuesta por tres servicios independientes desplegados en Kubernetes.
+PeoplePortal es una plataforma de autoservicio para colaboradores y RRHH, compuesta por tres servicios independientes coordinados a través de Kubernetes y un API Gateway.
 
 ```mermaid
 flowchart TB
-    subgraph Browser["Navegador"]
+    subgraph Browser["Navegador del usuario"]
         ColabApp["PeoplePortal-FrontEnd-Colaborador\nReact 19 + Vite\n:30081"]
         RRHHApp["PeoplePortal-FrontEnd-RRHH\nReact 19 + Vite\n:30082"]
     end
@@ -21,7 +21,7 @@ flowchart TB
         end
 
         subgraph Backend["Backend"]
-            API[".NET 9 API\nClean Architecture"]
+            API[".NET 9 API\nClean Architecture + CQRS"]
             NATS["NATS JetStream\n:4222"]
         end
 
@@ -30,8 +30,8 @@ flowchart TB
         end
     end
 
-    ColabApp -->|SSO PKCE| KC
-    RRHHApp  -->|SSO PKCE| KC
+    ColabApp -->|SSO PKCE S256| KC
+    RRHHApp  -->|SSO PKCE S256| KC
     ColabApp -->|proxy nginx /api/| API
     RRHHApp  -->|proxy nginx /api/| API
     API      --> KC
@@ -40,34 +40,7 @@ flowchart TB
     APISIX   --> API
 ```
 
-## Repositorio — Estructura
-
-```
-ProyectoIA-Forza/
-├── PeoplePortal-BackEnd/       ← .NET 9 API (Clean Architecture)
-│   ├── docs/                   ← Documentación backend (arquitectura, BD, seguridad)
-│   ├── k8s/                    ← Manifiestos backend (api, sqlserver, nats, migrations)
-│   ├── src/                    ← Código fuente (Api, Application, Domain, Infrastructure)
-│   ├── tests/                  ← Tests unitarios
-│   └── Dockerfile
-│
-├── PeoplePortal-FrontEnd-Colaborador/  ← React 19 (portal del empleado)
-│   ├── docs/                   ← Documentación frontend colaborador
-│   ├── k8s/                    ← Manifiesto frontend-colaborador
-│   ├── src/                    ← Código fuente
-│   └── Dockerfile
-│
-├── PeoplePortal-FrontEnd-RRHH/         ← React 19 (panel administrativo RRHH)
-│   ├── docs/                   ← Documentación frontend RRHH
-│   ├── k8s/                    ← Manifiesto frontend-rrhh
-│   ├── src/                    ← Código fuente
-│   └── Dockerfile
-│
-├── k8s/                        ← Manifiestos globales (namespace, secrets, keycloak, apisix)
-├── docs/                       ← Documentación global (esta carpeta)
-├── deploy/                     ← Scripts de build y deploy (PowerShell / bash)
-└── docker-compose.yml          ← Compose raíz para build de imágenes
-```
+---
 
 ## Puertos NodePort (K8s local — Docker Desktop)
 
@@ -76,14 +49,65 @@ ProyectoIA-Forza/
 | Keycloak | 30080 | `http://localhost:30080` |
 | Frontend Colaborador | 30081 | `http://localhost:30081` |
 | Frontend RRHH | 30082 | `http://localhost:30082` |
-| APISIX | 30090 | `http://localhost:30090` |
+| APISIX Gateway | 30090 | `http://localhost:30090` |
+
+---
 
 ## Roles de Keycloak
 
-| Rol | Descripción |
+| Rol | Descripción | Portal de acceso |
+|---|---|---|
+| `employee` | Colaborador — consulta su información y crea solicitudes | Colaborador |
+| `jefe_inmediato` | Jefe — aprueba solicitudes de su equipo | Colaborador |
+| `hr` | RRHH — acceso completo al panel administrativo | RRHH |
+| `nomina` | Nómina — carga vouchers de pago | RRHH |
+| `admin` | Administrador — usuarios, roles y configuración | RRHH |
+
+---
+
+## Estructura del repositorio raíz
+
+```
+ProyectoIA-Forza/
+├── README.md                          ← Descripción general del proyecto
+├── CONTRIBUTING.md                    ← Guía de contribución global
+├── docker-compose.yml                 ← Build de imágenes
+├── docs/                              ← Documentación global
+│   ├── README.md
+│   ├── arquitectura.md                ← Este archivo
+│   ├── despliegue.md
+│   ├── plan-implementacion.md
+│   └── adr/                           ← Architecture Decision Records
+│
+├── k8s/                               ← Manifiestos globales
+│   ├── namespace.yaml
+│   ├── secret.yaml
+│   ├── keycloak.yaml
+│   ├── keycloak-realm-configmap.yaml
+│   ├── apisix.yaml
+│   ├── apisix-configmap.yaml
+│   └── ingress.yaml
+│
+├── deploy/                            ← Scripts build + deploy
+│   ├── build.ps1
+│   └── deploy.ps1
+│
+├── PeoplePortal-BackEnd/              ← Submódulo: .NET 9 API
+│   └── docs/ → ver PeoplePortal-BackEnd/docs/README.md
+│
+├── PeoplePortal-FrontEnd-Colaborador/ ← Submódulo: React portal empleado
+│   └── docs/ → ver PeoplePortal-FrontEnd-Colaborador/docs/README.md
+│
+└── PeoplePortal-FrontEnd-RRHH/        ← Submódulo: React panel RRHH
+    └── docs/ → ver PeoplePortal-FrontEnd-RRHH/docs/README.md
+```
+
+---
+
+## Documentación por subproyecto
+
+| Subproyecto | Documentación técnica |
 |---|---|
-| `employee` | Colaborador — acceso al portal del colaborador |
-| `jefe_inmediato` | Jefe — puede aprobar solicitudes de su equipo |
-| `hr` | RRHH — acceso completo al panel administrativo |
-| `nomina` | Nómina — puede cargar vouchers de pago |
-| `admin` | Administrador — gestión de usuarios y configuración |
+| Backend | [PeoplePortal-BackEnd/docs/](../PeoplePortal-BackEnd/docs/README.md) |
+| Frontend Colaborador | [PeoplePortal-FrontEnd-Colaborador/docs/](../PeoplePortal-FrontEnd-Colaborador/docs/README.md) |
+| Frontend RRHH | [PeoplePortal-FrontEnd-RRHH/docs/](../PeoplePortal-FrontEnd-RRHH/docs/README.md) |
