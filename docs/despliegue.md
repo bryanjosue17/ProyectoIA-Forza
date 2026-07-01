@@ -69,7 +69,7 @@ kubectl apply -f k8s/apisix.yaml
 
 # ── Backend ───────────────────────────────────────────────────────────────────
 kubectl apply -f PeoplePortal-BackEnd/k8s/configmap.yaml
-kubectl apply -f PeoplePortal-BackEnd/k8s/sqlserver.yaml
+kubectl apply -f PeoplePortal-BackEnd/k8s/postgres.yaml
 kubectl apply -f PeoplePortal-BackEnd/k8s/nats.yaml
 
 # ── Migraciones (esperar a que terminen) ──────────────────────────────────────

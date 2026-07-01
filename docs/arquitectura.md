@@ -26,7 +26,7 @@ flowchart TB
         end
 
         subgraph Data["Persistencia"]
-            SQL["SQL Server 2022\n:1433"]
+            SQL["PostgreSQL 16\n:1433"]
         end
     end
 

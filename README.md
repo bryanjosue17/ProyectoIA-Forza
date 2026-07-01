@@ -40,7 +40,7 @@ Ver [`docs/`](./docs/README.md) para la documentación de infraestructura y arqu
 | Backend | .NET 9, Clean Architecture, CQRS, MediatR |
 | Frontend Colaborador | React 19, Vite, MUI v9, Keycloak-js |
 | Frontend RRHH | React 19, Vite, MUI v9, Keycloak-js |
-| Base de datos | SQL Server 2022, EF Core 9 |
+| Base de datos | PostgreSQL 16, EF Core 9 |
 | Autenticación | Keycloak (JWT + PKCE S256) |
 | API Gateway | APISIX con plugin openid-connect |
 | Mensajería | NATS JetStream |
