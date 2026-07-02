@@ -101,6 +101,89 @@ git push origin develop
 
 ---
 
+## Prerrequisitos
+
+Para ejecutar este proyecto de forma local, necesitas tener instalados:
+
+- **Docker Desktop** (con Kubernetes activado)
+- **Git**
+- **.NET 9 SDK** (opcional, para desarrollo backend)
+- **Node.js 22+** (opcional, para desarrollo frontend)
+- **Powershell 7+** (recomendado para scripts en Windows)
+
+---
+
+## Instrucciones para ejecutar el proyecto
+
+Este proyecto está diseñado para desplegarse fácilmente mediante un script automatizado que construye las imágenes y despliega todos los manifiestos en Kubernetes de forma local.
+
+1. Abre una terminal (Powershell) en la raíz del proyecto.
+2. Ejecuta el script de despliegue principal:
+   ```bash
+   ./deploy/deploy.ps1
+   ```
+3. El script creará el namespace `peopleportal` y desplegará:
+   - PostgreSQL (con persistencia PVC)
+   - NATS JetStream
+   - Keycloak (con configuración de realm pre-cargada)
+   - API Backend
+   - Frontend RRHH
+   - Frontend Colaborador
+   - APISIX (API Gateway + OIDC Plugin)
+
+4. **Acceso al sistema:**
+   - Portal Colaborador: [http://localhost:30081](http://localhost:30081)
+   - Portal RRHH: [http://localhost:30082](http://localhost:30082)
+   - API Swagger: `http://localhost:30090/api/swagger`
+   - Keycloak Admin: [http://localhost:30080](http://localhost:30080) (user: `admin`, pass: `admin`)
+
+---
+
+## Variables de entorno necesarias
+
+El proyecto maneja los secretos a través de Kubernetes Secrets (ver `k8s/secret.yaml`), pero a nivel de código se manejan las siguientes variables:
+
+**Backend (API):**
+- `ConnectionStrings__DefaultConnection`: Conexión a PostgreSQL.
+- `Jwt__Authority`: URL de Keycloak (`http://keycloak.peopleportal.svc.cluster.local:8080/realms/peopleportal`).
+- `Jwt__Audience`: `account`.
+
+**Frontends (Vite):**
+- `VITE_KEYCLOAK_URL`: `http://localhost:30080`
+- `VITE_KEYCLOAK_REALM`: `peopleportal`
+- `VITE_KEYCLOAK_CLIENT_ID`: `peopleportal-frontend` (Colaborador) o `peopleportal-hr-frontend` (RRHH)
+- `VITE_API_BASE_URL`: `http://localhost:30090` (APISIX Gateway)
+
+---
+
+## Capturas de pantalla
+
+> **Nota:** Puedes agregar tus capturas de pantalla aquí demostrando el sistema en funcionamiento.
+
+- **Dashboard RRHH:**
+  ![Dashboard RRHH](docs/assets/dashboard_rrhh.png) <!-- TODO: Sube tu captura a esta ruta -->
+
+- **Portal Colaborador:**
+  ![Portal Colaborador](docs/assets/portal_colaborador.png) <!-- TODO: Sube tu captura a esta ruta -->
+
+---
+
+## Matriz de cumplimiento (Anexo B)
+
+| Requisito | Estado | Observación / Enlace |
+|---|---|---|
+| Repositorio con código fuente | ✅ Cumple | Monorepo con submódulos. |
+| README completo | ✅ Cumple | Presente en la raíz. |
+| Carpeta docs/ | ✅ Cumple | Arquitectura, Flujos, BD, Despliegue, Seguridad. |
+| Carpeta docs/prompts/ | ✅ Cumple | Catálogo de prompts incluido. |
+| Workflows CI/CD | ✅ Cumple | Github Actions configurado en submódulos. |
+| Despliegue automatizado | ✅ Cumple | Script `deploy.ps1` e infraestructura en `k8s/`. |
+| Arquitectura C4 | ✅ Cumple | Nivel 1 y 2 en `docs/arquitectura.md`. |
+| Mapeo OWASP Top 10 | ✅ Cumple | Ver `docs/seguridad.md`. |
+| Diagramas ER y Secuencia | ✅ Cumple | Ver `docs/base-de-datos.md` y `docs/flujos.md`. |
+
+---
+
 ## Estado del proyecto
 
 Ver [docs/plan-implementacion.md](./docs/plan-implementacion.md) para el estado completo.

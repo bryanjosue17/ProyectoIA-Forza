@@ -42,6 +42,51 @@ flowchart TB
 
 ---
 
+## Diagrama C4 Nivel 2: Contenedores
+
+Este diagrama detalla los contenedores principales del sistema, sus responsabilidades tecnológicas y cómo interactúan internamente dentro del clúster Kubernetes.
+
+```mermaid
+C4Context
+    title Diagrama C4 Nivel 2 - Contenedores de PeoplePortal
+
+    Person(colaborador, "Colaborador", "Empleado de la empresa.")
+    Person(rrhh, "RRHH / Admin", "Personal de RRHH y Administradores.")
+
+    System_Boundary(c1, "PeoplePortal (K8s Namespace: peopleportal)") {
+        
+        Container(spa_colab, "Portal Colaborador", "React 19, Vite", "Aplicación web SPA (Single Page Application) donde los empleados gestionan sus solicitudes.")
+        Container(spa_rrhh, "Panel RRHH", "React 19, Vite", "Aplicación web SPA para la administración centralizada de empleados y documentos.")
+        
+        Container(apisix, "APISIX Gateway", "Apache APISIX", "API Gateway que enruta el tráfico hacia el backend y valida tokens de sesión.")
+        
+        Container(keycloak, "Servidor de Identidad", "Keycloak 24", "Servidor OIDC/OAuth2 para gestión de usuarios, login centralizado y roles (RBAC).")
+        
+        Container(api_backend, "PeoplePortal API", ".NET 9", "Backend monolito modular con Clean Architecture y CQRS (MediatR). Procesa la lógica de negocio.")
+        
+        ContainerDb(db, "Base de Datos", "PostgreSQL 16", "Almacenamiento relacional persistente (con PVC) de todos los datos del negocio.")
+        
+        ContainerQueue(nats, "NATS JetStream", "NATS", "Bus de mensajes (Event Bus) para comunicación asíncrona y publicación de eventos de dominio.")
+    }
+
+    Rel(colaborador, spa_colab, "Accede a", "HTTPS")
+    Rel(rrhh, spa_rrhh, "Administra desde", "HTTPS")
+    
+    Rel(spa_colab, keycloak, "Autenticación (SSO)", "OIDC / PKCE S256")
+    Rel(spa_rrhh, keycloak, "Autenticación (SSO)", "OIDC / PKCE S256")
+    
+    Rel(spa_colab, apisix, "Llamadas API REST", "JSON/HTTPS")
+    Rel(spa_rrhh, apisix, "Llamadas API REST", "JSON/HTTPS")
+    
+    Rel(apisix, api_backend, "Enruta tráfico", "HTTP")
+    
+    Rel(api_backend, db, "Lee y Escribe", "EF Core / TCP")
+    Rel(api_backend, nats, "Publica eventos de dominio", "NATS Client / TCP")
+    Rel(api_backend, keycloak, "Valida firmas de JWT y consulta metadatos", "HTTP")
+```
+
+---
+
 ## Puertos NodePort (K8s local — Docker Desktop)
 
 | Servicio | Puerto | URL |
