@@ -22,7 +22,7 @@ Este plan cubre de forma integral:
 | 2 | Módulos funcionales MVP | ✅ | Perfil, documentos, comunicados, beneficios, solicitudes, dashboard, panel RRHH, reportes |
 | 3 | Autenticación y roles Keycloak | ✅ | JWT + PKCE S256 + políticas por rol |
 | 4 | NATS JetStream integrado | ✅ | Publicación/consumo de eventos en infraestructura |
-| 5 | SQL Server + migraciones versionadas | ✅ | Migraciones EF Core aplicadas |
+| 5 | PostgreSQL + migraciones versionadas | ✅ | Migraciones EF Core (PostgreSQL) aplicadas |
 | 6 | Kubernetes (manifiestos) | ✅ | Manifiestos globales y por subproyecto |
 | 7 | APISIX gateway | ✅ | Configuración declarativa y plugin OIDC |
 | 8 | CI/CD en repos principales | ✅ | Build/test/lint y pipeline docker |
@@ -114,3 +114,9 @@ El proyecto se considera técnicamente implementado para alcance MVP+ cuando:
 - Infraestructura base y despliegue están documentados.
 
 Estado actual frente a este criterio: ✅ CUMPLIDO (con pendientes administrativos/documentales señalados arriba).
+
+### 2.3 Últimos Parches (Correcciones Fase 2)
+- ✅ Migración exitosa de base de datos a **PostgreSQL** para optimizar persistencia.
+- ✅ Resolución de bugs de UI/UX en paneles FrontEnd y fechas.
+- ✅ Fijación de identidades (UUIDs) de Keycloak en ConfigMap para evitar orfandad tras reinicios de pod.
+- ✅ Refactor de Dashboard RRHH para extraer métricas precisas del backend.
