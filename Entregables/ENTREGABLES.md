@@ -68,9 +68,9 @@ Catálogo de prompts utilizados durante el desarrollo:
 
 ## 4. Propuesta (Semana 1)
 
-📄 [`Brief_Capstone_ForzaTechAcademy_v1.docx`](./Brief_Capstone_ForzaTechAcademy_v1.docx)
+📄 [`Brief_Capstone_ForzaTechAcademy_v1.pdf`](./Brief_Capstone_ForzaTechAcademy_v1.pdf)
 
-> **Nota:** La propuesta original se encuentra en formato `.docx`. Si se requiere en PDF, convertir antes de la entrega.
+> **Nota:** La propuesta original en formato `.docx` ha sido convertida a PDF exitosamente para la entrega final.
 
 ---
 
@@ -95,6 +95,6 @@ Catálogo de prompts utilizados durante el desarrollo:
 | `docs/seguridad.md` | ✅ Listo | Mapeo OWASP Top 10 |
 | `docs/prompts/` | ✅ Listo | Catálogo completo (11 archivos en 10 categorías) |
 | CI/CD Workflows | ✅ Listo | GitHub Actions en los 3 submódulos |
-| Propuesta Semana 1 (PDF) | ⚠️ Pendiente | Disponible en `.docx`, convertir a PDF |
+| Propuesta Semana 1 (PDF) | ✅ Listo | Convertido a PDF exitosamente |
 | Video Demo | ❌ Pendiente | Grabar video de 5–8 minutos |
 | Capturas de pantalla | ⚠️ Pendiente | Agregar en README.md |

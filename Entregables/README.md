@@ -134,7 +134,7 @@ Este proyecto está diseñado para desplegarse fácilmente mediante un script au
 4. **Acceso al sistema:**
    - Portal Colaborador: [http://localhost:30081](http://localhost:30081)
    - Portal RRHH: [http://localhost:30082](http://localhost:30082)
-   - API Swagger: `http://localhost:30090/api/swagger`
+   - API Swagger: `http://localhost:30099/swagger/index.html`
    - Keycloak Admin: [http://localhost:30080](http://localhost:30080) (user: `admin`, pass: `admin`)
 
 ---

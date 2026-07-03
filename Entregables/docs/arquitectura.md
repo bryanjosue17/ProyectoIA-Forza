@@ -95,6 +95,7 @@ C4Context
 | Frontend Colaborador | 30081 | `http://localhost:30081` |
 | Frontend RRHH | 30082 | `http://localhost:30082` |
 | APISIX Gateway | 30090 | `http://localhost:30090` |
+| API Backend (Swagger) | 30099 | `http://localhost:30099/swagger/index.html` |
 
 ---
 

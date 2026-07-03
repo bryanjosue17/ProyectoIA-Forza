@@ -108,6 +108,7 @@ kubectl get jobs     -n peopleportal
 | Panel RRHH | http://localhost:30082 |
 | Keycloak Admin | http://localhost:30080/admin |
 | API (via APISIX) | http://localhost:30090/api |
+| API Swagger | http://localhost:30099/swagger/index.html |
 
 ---
 
