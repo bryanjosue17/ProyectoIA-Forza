@@ -160,7 +160,7 @@ data:
           nodes:
             "peopleportal-api-service:80": 1
 
-      - uri: /swagger*
+      - uri: /swagger/*
         name: swagger-api
         methods: ["GET"]
         upstream:
