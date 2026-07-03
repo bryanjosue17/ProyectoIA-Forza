@@ -18,6 +18,6 @@ Cada submódulo tiene su propia carpeta `docs/` con su documentación interna:
 | Documento | Descripción |
 |---|---|
 | [arquitectura.md](./arquitectura.md) | Diagrama del sistema completo: componentes, puertos K8s, roles Keycloak |
-| [despliegue.md](./despliegue.md) | Guía de despliegue end-to-end: build → K8s → verificación |
+| [despliegue.md](./despliegue.md) | Guía de despliegue Base de datos (PostgreSQL) end-to-end: build → K8s → verificación |
 | [plan-implementacion.md](./plan-implementacion.md) | Estado del proyecto: completado, pendiente y criterios de cierre |
 | [adr/001-react-en-lugar-de-angular.md](./adr/001-react-en-lugar-de-angular.md) | Decision Record: por qué se usa React 19 en lugar de Angular |
