@@ -54,10 +54,15 @@ Catálogo de prompts utilizados durante el desarrollo:
 |---|---|
 | Arquitectura | [`docs/prompts/arquitectura/diagrama-c4.md`](./docs/prompts/arquitectura/diagrama-c4.md) |
 | Arquitectura | [`docs/prompts/arquitectura/diseno-entidades.md`](./docs/prompts/arquitectura/diseno-entidades.md) |
-| Código | [`docs/prompts/codigo/scaffolding-handler-cqrs.md`](./docs/prompts/codigo/scaffolding-handler-cqrs.md) |
-| Código | [`docs/prompts/codigo/consumer-nats.md`](./docs/prompts/codigo/consumer-nats.md) |
-| Código | [`docs/prompts/codigo/pipeline-github-actions.md`](./docs/prompts/codigo/pipeline-github-actions.md) |
-| Tests | [`docs/prompts/tests/unit-tests-handler.md`](./docs/prompts/tests/unit-tests-handler.md) |
+| Backend | [`docs/prompts/backend/cqrs-handlers.md`](./docs/prompts/backend/cqrs-handlers.md) |
+| Base de Datos | [`docs/prompts/base-de-datos/schema-y-seed.md`](./docs/prompts/base-de-datos/schema-y-seed.md) |
+| CI/CD | [`docs/prompts/ci-cd/pipelines.md`](./docs/prompts/ci-cd/pipelines.md) |
+| Docker | [`docs/prompts/docker/dockerfiles.md`](./docs/prompts/docker/dockerfiles.md) |
+| Frontend Colaborador | [`docs/prompts/frontend-colaborador/paginas-y-componentes.md`](./docs/prompts/frontend-colaborador/paginas-y-componentes.md) |
+| Frontend RRHH | [`docs/prompts/frontend-rrhh/paginas-y-componentes.md`](./docs/prompts/frontend-rrhh/paginas-y-componentes.md) |
+| Kubernetes | [`docs/prompts/kubernetes/manifiestos.md`](./docs/prompts/kubernetes/manifiestos.md) |
+| Seguridad | [`docs/prompts/seguridad/owasp.md`](./docs/prompts/seguridad/owasp.md) |
+| Tests | [`docs/prompts/tests/pruebas.md`](./docs/prompts/tests/pruebas.md) |
 
 ---
 
@@ -88,7 +93,7 @@ Catálogo de prompts utilizados durante el desarrollo:
 | `docs/base-de-datos.md` | ✅ Listo | ER Diagram |
 | `docs/despliegue.md` | ✅ Listo | CI/CD + Runbook |
 | `docs/seguridad.md` | ✅ Listo | Mapeo OWASP Top 10 |
-| `docs/prompts/` | ✅ Listo | 6 prompts categorizados |
+| `docs/prompts/` | ✅ Listo | Catálogo completo (11 archivos en 10 categorías) |
 | CI/CD Workflows | ✅ Listo | GitHub Actions en los 3 submódulos |
 | Propuesta Semana 1 (PDF) | ⚠️ Pendiente | Disponible en `.docx`, convertir a PDF |
 | Video Demo | ❌ Pendiente | Grabar video de 5–8 minutos |
