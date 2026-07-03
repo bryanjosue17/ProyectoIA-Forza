@@ -41,6 +41,8 @@ Este plan cubre de forma integral:
 | 21 | Notificaciones en tiempo real (polling) | ✅ | `NotificationsContext` (colab, 90s) + badge campana (RRHH, 60s) |
 | 22 | Campo `hrComment` en aprobación/rechazo | ✅ | TextField en dialog RRHH Requests + jefe_inmediato |
 | 23 | Iconos en títulos de todas las páginas | ✅ | Iconos MUI color="primary" en todos los h4/h5 de ambos frontends |
+| 24 | Charts interactivos en RRHH (Chart.js) | ✅ | Dashboard: Doughnut + Bar; Reportes: Doughnut, Bar H, Line, Bar agrupado |
+| 25 | PDFs de reportes refactorizados | ✅ | Tablas con %, barras visuales proporcionales, resúmenes, Reporte General 2 págs |
 
 ### 2.2 Pendiente / parcial
 
