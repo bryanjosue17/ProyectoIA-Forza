@@ -43,6 +43,8 @@ Este plan cubre de forma integral:
 | 23 | Iconos en títulos de todas las páginas | ✅ | Iconos MUI color="primary" en todos los h4/h5 de ambos frontends |
 | 24 | Charts interactivos en RRHH (Chart.js) | ✅ | Dashboard: Doughnut + Bar; Reportes: Doughnut, Bar H, Line, Bar agrupado |
 | 25 | PDFs de reportes refactorizados | ✅ | Tablas con %, barras visuales proporcionales, resúmenes, Reporte General 2 págs |
+| 26 | Módulo Nómina (renombrado + expandido) | ✅ | NominaType enum, Notes field, migración DB, rutas /api/nomina, página Colaborador y RRHH |
+| 27 | Módulo Gestión de Usuarios (Keycloak) | ✅ | IKeycloakAdminService, proxy RRHH, página UserManagement con roles/enable/reset-pw |
 
 ### 2.2 Pendiente / parcial
 
