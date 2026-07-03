@@ -159,3 +159,11 @@ data:
           type: roundrobin
           nodes:
             "peopleportal-api-service:80": 1
+
+      - uri: /swagger*
+        name: swagger-api
+        methods: ["GET"]
+        upstream:
+          type: roundrobin
+          nodes:
+            "peopleportal-api-service:80": 1
