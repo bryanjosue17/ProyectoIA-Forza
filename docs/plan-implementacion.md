@@ -1,7 +1,7 @@
 # Plan de Implementación General — PeoplePortal (Backend + Frontend + Infra)
 
 > Documento unificado (reemplaza el contenido de `PENDIENTE.md` y del plan anterior).  
-> Última actualización: 2026-06-30.
+> Última actualización: 2026-07-03.
 
 ## 1. Alcance del plan
 
@@ -31,6 +31,20 @@ Este plan cubre de forma integral:
 | 11 | Tests frontend colaborador en verde | ✅ | 25/25 |
 | 12 | Tests frontend RRHH en verde | ✅ | 29/29 |
 | 13 | Cobertura global >= 60% (scope de cobertura configurado) | ✅ | Líneas 60.57%, ramas 60.20% |
+| 14 | Dark mode moderno Material 3 (ambos frontends) | ✅ | Paleta slate-900/800, Inter font, component overrides MUI |
+| 15 | UI/UX overhaul general (ambos frontends) | ✅ | Hover effects, alpha icon boxes, search fields, table headers, stat cards |
+| 16 | Vista jefe_inmediato (`/team-requests`) | ✅ | Nueva página + `GET /api/manager/requests` + aprobación con comentario |
+| 17 | Gestión de Vouchers de Pago (RRHH/Nómina) | ✅ | Entidad `Voucher` mapeada + API completa + página `Vouchers.jsx` |
+| 18 | Fix deactivate Announcement | ✅ | `PATCH /api/hr/announcements/{id}/deactivate` + handler |
+| 19 | Paginación en listas RRHH y Colaborador | ✅ | `TablePagination` en Employees, Documents, Requests, Vouchers |
+| 20 | Búsqueda y filtros en Colaborador | ✅ | SearchIcon + filtro estado en Documents y Requests |
+| 21 | Notificaciones en tiempo real (polling) | ✅ | `NotificationsContext` (colab, 90s) + badge campana (RRHH, 60s) |
+| 22 | Campo `hrComment` en aprobación/rechazo | ✅ | TextField en dialog RRHH Requests + jefe_inmediato |
+| 23 | Iconos en títulos de todas las páginas | ✅ | Iconos MUI color="primary" en todos los h4/h5 de ambos frontends |
+| 24 | Charts interactivos en RRHH (Chart.js) | ✅ | Dashboard: Doughnut + Bar; Reportes: Doughnut, Bar H, Line, Bar agrupado |
+| 25 | PDFs de reportes refactorizados | ✅ | Tablas con %, barras visuales proporcionales, resúmenes, Reporte General 2 págs |
+| 26 | Módulo Nómina (renombrado + expandido) | ✅ | NominaType enum, Notes field, migración DB, rutas /api/nomina, página Colaborador y RRHH |
+| 27 | Módulo Gestión de Usuarios (Keycloak) | ✅ | IKeycloakAdminService, proxy RRHH, página UserManagement con roles/enable/reset-pw |
 
 ### 2.2 Pendiente / parcial
 
