@@ -26,17 +26,23 @@ spec:
             - name: apisix-config
               mountPath: /usr/local/apisix/conf/config.yaml
               subPath: config.yaml
+            - name: apisix-routes
+              mountPath: /usr/local/apisix/conf/apisix.yaml
+              subPath: apisix.yaml
           resources:
             requests:
-              memory: "128Mi"
+              memory: "256Mi"
               cpu: "100m"
             limits:
-              memory: "256Mi"
-              cpu: "300m"
+              memory: "512Mi"
+              cpu: "500m"
       volumes:
         - name: apisix-config
           configMap:
             name: apisix-config
+        - name: apisix-routes
+          configMap:
+            name: apisix-routes
 ---
 apiVersion: v1
 kind: Service
