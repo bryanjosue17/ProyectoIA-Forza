@@ -17,52 +17,52 @@ data:
 
     routes:
       - id: "1"
-        uri: /api/employees/*
+        uri: /api/employees*
         methods: [GET, PUT, POST, OPTIONS]
         upstream_id: "backend"
 
       - id: "2"
-        uri: /api/requests/*
+        uri: /api/requests*
         methods: [GET, POST, PATCH, OPTIONS]
         upstream_id: "backend"
 
       - id: "3"
-        uri: /api/hr/*
+        uri: /api/hr*
         methods: [GET, POST, PATCH, DELETE, OPTIONS]
         upstream_id: "backend"
 
       - id: "4"
-        uri: /api/documents/*
+        uri: /api/documents*
         methods: [GET, POST, PATCH, OPTIONS]
         upstream_id: "backend"
 
       - id: "5"
-        uri: /api/announcements/*
+        uri: /api/announcements*
         methods: [GET, POST, PUT, DELETE, OPTIONS]
         upstream_id: "backend"
 
       - id: "6"
-        uri: /api/benefits/*
+        uri: /api/benefits*
         methods: [GET, POST, PUT, DELETE, OPTIONS]
         upstream_id: "backend"
 
       - id: "7"
-        uri: /api/dashboard/*
+        uri: /api/dashboard*
         methods: [GET, OPTIONS]
         upstream_id: "backend"
 
       - id: "8"
-        uri: /api/manager/*
+        uri: /api/manager*
         methods: [GET, PATCH, OPTIONS]
         upstream_id: "backend"
 
       - id: "9"
-        uri: /api/nomina/*
+        uri: /api/nomina*
         methods: [GET, POST, OPTIONS]
         upstream_id: "backend"
 
       - id: "10"
-        uri: /api/users/*
+        uri: /api/users*
         methods: [GET, POST, PATCH, DELETE, OPTIONS]
         upstream_id: "backend"
 
@@ -77,3 +77,4 @@ data:
         upstream_id: "backend"
 
     #END
+
