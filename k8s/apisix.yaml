@@ -15,6 +15,23 @@ spec:
       labels:
         app: apisix
     spec:
+      initContainers:
+        - name: copy-config
+          image: apache/apisix:latest
+          command:
+            - sh
+            - -c
+            - |
+              cp -a /usr/local/apisix/conf/. /conf-writable/
+              cp /configmap/config.yaml /conf-writable/config.yaml
+              cp /routes/apisix.yaml /conf-writable/apisix.yaml
+          volumeMounts:
+            - name: apisix-config
+              mountPath: /configmap
+            - name: apisix-routes
+              mountPath: /routes
+            - name: apisix-conf-writable
+              mountPath: /conf-writable
       containers:
         - name: apisix
           image: apache/apisix:latest
@@ -23,12 +40,8 @@ spec:
             - containerPort: 9080
             - containerPort: 9180
           volumeMounts:
-            - name: apisix-config
-              mountPath: /usr/local/apisix/conf/config.yaml
-              subPath: config.yaml
-            - name: apisix-routes
-              mountPath: /usr/local/apisix/conf/apisix.yaml
-              subPath: apisix.yaml
+            - name: apisix-conf-writable
+              mountPath: /usr/local/apisix/conf
           resources:
             requests:
               memory: "256Mi"
@@ -43,6 +56,8 @@ spec:
         - name: apisix-routes
           configMap:
             name: apisix-routes
+        - name: apisix-conf-writable
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service

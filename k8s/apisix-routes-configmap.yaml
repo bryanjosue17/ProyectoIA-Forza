@@ -5,6 +5,8 @@ metadata:
   namespace: peopleportal
 data:
   apisix.yaml: |
+
+
     upstreams:
       - id: "backend"
         type: roundrobin
