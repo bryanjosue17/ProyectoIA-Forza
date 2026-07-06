@@ -24,7 +24,7 @@ data:
     routes:
       - uri: /api/requests*
         name: requests-api
-        methods: ["GET", "POST", "PATCH"]
+        methods: ["GET", "POST", "PATCH", "OPTIONS"]
         plugins:
           openid-connect:
             client_id: "peopleportal-api"
@@ -42,7 +42,7 @@ data:
 
       - uri: /api/hr*
         name: hr-api
-        methods: ["GET", "POST", "PATCH"]
+        methods: ["GET", "POST", "PATCH", "OPTIONS"]
         plugins:
           openid-connect:
             client_id: "peopleportal-api"
@@ -58,7 +58,7 @@ data:
 
       - uri: /api/employees*
         name: employees-api
-        methods: ["GET", "PUT", "POST"]
+        methods: ["GET", "PUT", "POST", "OPTIONS"]
         plugins:
           openid-connect:
             client_id: "peopleportal-api"
@@ -74,7 +74,7 @@ data:
 
       - uri: /api/documents*
         name: documents-api
-        methods: ["GET", "POST", "PATCH"]
+        methods: ["GET", "POST", "PATCH", "OPTIONS"]
         plugins:
           openid-connect:
             client_id: "peopleportal-api"
@@ -90,7 +90,7 @@ data:
 
       - uri: /api/announcements*
         name: announcements-api
-        methods: ["GET", "POST"]
+        methods: ["GET", "POST", "OPTIONS"]
         plugins:
           openid-connect:
             client_id: "peopleportal-api"
@@ -106,7 +106,7 @@ data:
 
       - uri: /api/benefits*
         name: benefits-api
-        methods: ["GET"]
+        methods: ["GET", "OPTIONS"]
         plugins:
           openid-connect:
             client_id: "peopleportal-api"
@@ -122,7 +122,7 @@ data:
 
       - uri: /api/dashboard*
         name: dashboard-api
-        methods: ["GET"]
+        methods: ["GET", "OPTIONS"]
         plugins:
           openid-connect:
             client_id: "peopleportal-api"
@@ -138,7 +138,7 @@ data:
 
       - uri: /api/manager*
         name: manager-api
-        methods: ["GET", "PATCH"]
+        methods: ["GET", "PATCH", "OPTIONS"]
         plugins:
           openid-connect:
             client_id: "peopleportal-api"
@@ -154,7 +154,7 @@ data:
 
       - uri: /health
         name: health-api
-        methods: ["GET"]
+        methods: ["GET", "OPTIONS"]
         upstream:
           type: roundrobin
           nodes:
@@ -162,7 +162,7 @@ data:
 
       - uri: /swagger/*
         name: swagger-api
-        methods: ["GET"]
+        methods: ["GET", "OPTIONS"]
         upstream:
           type: roundrobin
           nodes:
