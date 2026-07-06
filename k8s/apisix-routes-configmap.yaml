@@ -1,4 +1,4 @@
-﻿apiVersion: v1
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: apisix-routes
@@ -18,131 +18,51 @@ data:
         uri: /api/employees/*
         methods: [GET, PUT, POST, OPTIONS]
         upstream_id: "backend"
-        plugins:
-          openid-connect:
-            client_id: "peopleportal-api"
-            client_secret: "fXvEaUeieNd3taTylb0LbBY4npbISmXC"
-            discovery: "http://keycloak-service:8080/realms/peopleportal/.well-known/openid-configuration"
-            scope: "openid profile email"
-            bearer_only: true
-            realm: "peopleportal"
 
       - id: "2"
         uri: /api/requests/*
         methods: [GET, POST, PATCH, OPTIONS]
         upstream_id: "backend"
-        plugins:
-          openid-connect:
-            client_id: "peopleportal-api"
-            client_secret: "fXvEaUeieNd3taTylb0LbBY4npbISmXC"
-            discovery: "http://keycloak-service:8080/realms/peopleportal/.well-known/openid-configuration"
-            scope: "openid profile email"
-            bearer_only: true
-            realm: "peopleportal"
 
       - id: "3"
         uri: /api/hr/*
         methods: [GET, POST, PATCH, DELETE, OPTIONS]
         upstream_id: "backend"
-        plugins:
-          openid-connect:
-            client_id: "peopleportal-api"
-            client_secret: "fXvEaUeieNd3taTylb0LbBY4npbISmXC"
-            discovery: "http://keycloak-service:8080/realms/peopleportal/.well-known/openid-configuration"
-            scope: "openid profile email"
-            bearer_only: true
-            realm: "peopleportal"
 
       - id: "4"
         uri: /api/documents/*
         methods: [GET, POST, PATCH, OPTIONS]
         upstream_id: "backend"
-        plugins:
-          openid-connect:
-            client_id: "peopleportal-api"
-            client_secret: "fXvEaUeieNd3taTylb0LbBY4npbISmXC"
-            discovery: "http://keycloak-service:8080/realms/peopleportal/.well-known/openid-configuration"
-            scope: "openid profile email"
-            bearer_only: true
-            realm: "peopleportal"
 
       - id: "5"
         uri: /api/announcements/*
         methods: [GET, POST, PUT, DELETE, OPTIONS]
         upstream_id: "backend"
-        plugins:
-          openid-connect:
-            client_id: "peopleportal-api"
-            client_secret: "fXvEaUeieNd3taTylb0LbBY4npbISmXC"
-            discovery: "http://keycloak-service:8080/realms/peopleportal/.well-known/openid-configuration"
-            scope: "openid profile email"
-            bearer_only: true
-            realm: "peopleportal"
 
       - id: "6"
         uri: /api/benefits/*
         methods: [GET, POST, PUT, DELETE, OPTIONS]
         upstream_id: "backend"
-        plugins:
-          openid-connect:
-            client_id: "peopleportal-api"
-            client_secret: "fXvEaUeieNd3taTylb0LbBY4npbISmXC"
-            discovery: "http://keycloak-service:8080/realms/peopleportal/.well-known/openid-configuration"
-            scope: "openid profile email"
-            bearer_only: true
-            realm: "peopleportal"
 
       - id: "7"
         uri: /api/dashboard/*
         methods: [GET, OPTIONS]
         upstream_id: "backend"
-        plugins:
-          openid-connect:
-            client_id: "peopleportal-api"
-            client_secret: "fXvEaUeieNd3taTylb0LbBY4npbISmXC"
-            discovery: "http://keycloak-service:8080/realms/peopleportal/.well-known/openid-configuration"
-            scope: "openid profile email"
-            bearer_only: true
-            realm: "peopleportal"
 
       - id: "8"
         uri: /api/manager/*
         methods: [GET, PATCH, OPTIONS]
         upstream_id: "backend"
-        plugins:
-          openid-connect:
-            client_id: "peopleportal-api"
-            client_secret: "fXvEaUeieNd3taTylb0LbBY4npbISmXC"
-            discovery: "http://keycloak-service:8080/realms/peopleportal/.well-known/openid-configuration"
-            scope: "openid profile email"
-            bearer_only: true
-            realm: "peopleportal"
 
       - id: "9"
         uri: /api/nomina/*
         methods: [GET, POST, OPTIONS]
         upstream_id: "backend"
-        plugins:
-          openid-connect:
-            client_id: "peopleportal-api"
-            client_secret: "fXvEaUeieNd3taTylb0LbBY4npbISmXC"
-            discovery: "http://keycloak-service:8080/realms/peopleportal/.well-known/openid-configuration"
-            scope: "openid profile email"
-            bearer_only: true
-            realm: "peopleportal"
 
       - id: "10"
         uri: /api/users/*
         methods: [GET, POST, PATCH, DELETE, OPTIONS]
         upstream_id: "backend"
-        plugins:
-          openid-connect:
-            client_id: "peopleportal-api"
-            client_secret: "fXvEaUeieNd3taTylb0LbBY4npbISmXC"
-            discovery: "http://keycloak-service:8080/realms/peopleportal/.well-known/openid-configuration"
-            scope: "openid profile email"
-            bearer_only: true
-            realm: "peopleportal"
 
       - id: "11"
         uri: /health
