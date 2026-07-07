@@ -8,11 +8,26 @@
   "resetPasswordAllowed": true,
   "roles": {
     "realm": [
-      { "name": "employee", "description": "Colaborador" },
-      { "name": "jefe_inmediato", "description": "Jefe inmediato" },
-      { "name": "hr", "description": "Recursos Humanos" },
-      { "name": "nomina", "description": "Nómina" },
-      { "name": "admin", "description": "Administrador" }
+      {
+        "name": "employee",
+        "description": "Colaborador"
+      },
+      {
+        "name": "jefe_inmediato",
+        "description": "Jefe inmediato"
+      },
+      {
+        "name": "hr",
+        "description": "Recursos Humanos"
+      },
+      {
+        "name": "nomina",
+        "description": "Nómina"
+      },
+      {
+        "name": "admin",
+        "description": "Administrador"
+      }
     ]
   },
   "clients": [
@@ -65,7 +80,8 @@
       "protocol": "openid-connect",
       "bearerOnly": true,
       "standardFlowEnabled": false,
-      "directAccessGrantsEnabled": false
+      "directAccessGrantsEnabled": false,
+      "secret": "TxsmaHpGkhQhpF7Zj3XcqxXtNdlV6L5m"
     }
   ],
   "users": [
@@ -83,7 +99,9 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["employee"]
+      "realmRoles": [
+        "employee"
+      ]
     },
     {
       "username": "testmanager",
@@ -99,7 +117,10 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["employee", "jefe_inmediato"]
+      "realmRoles": [
+        "employee",
+        "jefe_inmediato"
+      ]
     },
     {
       "username": "testhr",
@@ -115,7 +136,10 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["employee", "hr"]
+      "realmRoles": [
+        "employee",
+        "hr"
+      ]
     },
     {
       "username": "admin",
@@ -131,7 +155,10 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["employee", "admin"]
+      "realmRoles": [
+        "employee",
+        "admin"
+      ]
     }
   ]
 }
