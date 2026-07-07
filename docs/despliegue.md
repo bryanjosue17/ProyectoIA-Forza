@@ -100,24 +100,7 @@ kubectl get jobs     -n peopleportal
 
 ---
 
-## 6. Verificar con tests E2E
-
-```bash
-# Ejecutar pruebas E2E del Portal RRHH
-cd PeoplePortal-FrontEnd-RRHH
-npx playwright install msedge
-npx playwright test full-flows.spec.js
-
-# Ejecutar pruebas E2E del Portal Colaborador
-cd ../PeoplePortal-FrontEnd-Colaborador
-npx playwright install msedge
-npx playwright test full-flows.spec.js
-```
-
-Los tests generan reporte HTML (`playwright show-report`) y capturas de pantalla en `docs/{app}/screenshots/`.  
-Ver documentación completa en [`docs/playwright.md`](./playwright.md).
-
-## 7. URLs de acceso
+## 6. URLs de acceso
 
 | Servicio | URL |
 |---|---|
@@ -129,7 +112,7 @@ Ver documentación completa en [`docs/playwright.md`](./playwright.md).
 
 ---
 
-## 8. Limpiar entorno
+## 7. Limpiar entorno
 
 ```bash
 kubectl delete namespace peopleportal
@@ -137,7 +120,7 @@ kubectl delete namespace peopleportal
 
 ---
 
-## 9. CI/CD (GitHub Actions)
+## 8. CI/CD (GitHub Actions)
 
 Cada submódulo tiene su propio `.github/workflows/ci.yml` con dos jobs:
 
