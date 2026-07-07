@@ -244,16 +244,6 @@ El Trace Viewer muestra:
 
 ---
 
-## Agentes
-
-El archivo `.agents/AGENTS.md` en la raíz del proyecto contiene reglas específicas para la generación de tests E2E con Playwright:
-
-- Prohibición de `waitForTimeout()` (usar auto-waiting)
-- Uso obligatorio de `test.step()` para organización
-- Patrón Page Object Model
-- Localizadores semánticos (`getByRole`, `getByTestId`)
-- Configuración de puertos y autenticación Keycloak
-
 ---
 
 ## Resolución de Problemas
