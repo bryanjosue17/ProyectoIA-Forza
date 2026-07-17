@@ -58,14 +58,11 @@ bash deploy.sh --build
 bash deploy.sh   # solo manifiestos
 ```
 
-> **Nota sobre la imagen `latest`:** Los deployments de frontend usan `imagePullPolicy: Never`
-> con la etiqueta fija `latest`. Esto significa que `kubectl apply` **no reinicia los pods**
-> aunque la imagen haya sido reconstruida. Los scripts incluyen `kubectl rollout restart`
-> automáticamente para garantizar que los pods carguen la imagen nueva.
-> Si redespliegas manualmente, ejecuta:
-> ```bash
-> kubectl rollout restart deployment/frontend-colaborador deployment/frontend-rrhh -n peopleportal
-> ```
+> **Auto-rolling update con SHA tag:** Los scripts calculan automáticamente el **git short SHA**
+> del commit actual como tag de imagen (ej. `peopleportal-frontend-rrhh:a1b2c3d`). Al usar
+> `kubectl set image` con un tag único por build, Kubernetes detecta el cambio y activa un
+> **rolling update automático** sin necesidad de `rollout restart`. Los pods nuevos reemplazan
+> a los viejos sin downtime. Para forzar un tag específico: `deploy.ps1 -Build -ImageTag v1.2.3`
 
 ---
 
@@ -97,11 +94,12 @@ kubectl apply -f PeoplePortal-BackEnd/k8s/api.yaml
 kubectl apply -f PeoplePortal-FrontEnd-Colaborador/k8s/frontend-colaborador.yaml
 kubectl apply -f PeoplePortal-FrontEnd-RRHH/k8s/frontend-rrhh.yaml
 
-# IMPORTANTE: rollout restart para cargar imagen :latest reconstruida
-kubectl rollout restart deployment/frontend-colaborador -n peopleportal
-kubectl rollout restart deployment/frontend-rrhh        -n peopleportal
-kubectl rollout status   deployment/frontend-colaborador -n peopleportal
-kubectl rollout status   deployment/frontend-rrhh        -n peopleportal
+# Usar tag del git SHA actual para forzar rolling update automático
+SHA=$(git rev-parse --short HEAD)
+kubectl set image deployment/frontend-colaborador nginx=peopleportal-frontend-colaborador:$SHA -n peopleportal
+kubectl set image deployment/frontend-rrhh        nginx=peopleportal-frontend-rrhh:$SHA       -n peopleportal
+kubectl rollout status deployment/frontend-colaborador -n peopleportal
+kubectl rollout status deployment/frontend-rrhh        -n peopleportal
 
 # ── Ingress (opcional) ────────────────────────────────────────────────────────
 kubectl apply -f k8s/ingress.yaml

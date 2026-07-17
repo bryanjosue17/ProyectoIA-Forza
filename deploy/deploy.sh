@@ -96,12 +96,10 @@ echo -e "\n[Phase 5] Deploying Frontends..."
 kubectl apply -f "$COLAB_K8S/frontend-colaborador.yaml"
 kubectl apply -f "$RRHH_K8S/frontend-rrhh.yaml"
 
-# rollout restart forces pods to pick up the newly built :latest image,
-# because imagePullPolicy: Never + same tag means kubectl apply alone
-# does NOT trigger a pod replacement.
-echo "  Rolling out frontend pods to apply new images..."
-kubectl rollout restart deployment/frontend-colaborador -n peopleportal
-kubectl rollout restart deployment/frontend-rrhh        -n peopleportal
+# kubectl set image detecta cambio de tag → rolling update automático sin rollout restart
+echo "  Updating frontend images to tag: $IMAGE_TAG"
+kubectl set image deployment/frontend-colaborador nginx="peopleportal-frontend-colaborador:${IMAGE_TAG}" -n peopleportal
+kubectl set image deployment/frontend-rrhh        nginx="peopleportal-frontend-rrhh:${IMAGE_TAG}"       -n peopleportal
 
 # ── Phase 6: Ingress (optional) ───────────────────────────────────────────────
 if [ -f "$GLOBAL_K8S/ingress.yaml" ]; then

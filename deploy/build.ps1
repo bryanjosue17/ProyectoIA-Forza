@@ -1,10 +1,17 @@
 param(
-    [string]$ImageTag = "latest"
+    [string]$ImageTag = ""
 )
 
 $ErrorActionPreference = "Stop"
 $Root = Split-Path $PSScriptRoot -Parent
 
+# Si no se provee tag, usar git short SHA para garantizar rolling update automático
+if (-not $ImageTag) {
+    $ImageTag = (git -C $Root rev-parse --short HEAD 2>$null) -replace '\s',''
+    if (-not $ImageTag) { $ImageTag = "latest" }
+}
+
+Write-Host "Image tag: $ImageTag" -ForegroundColor DarkGray
 Write-Host "===== Building all PeoplePortal images =====" -ForegroundColor Cyan
 
 # Backend API
