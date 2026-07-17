@@ -126,11 +126,11 @@ npx playwright install
 # Desde la raíz del frontend (NO desde e2e-tests/)
 cd PeoplePortal-FrontEnd-RRHH   # o PeoplePortal-FrontEnd-Colaborador
 
-# Ejecutar el flujo completo
-npx playwright test full-flows.spec.js
+# Ejecutar el flujo completo (con navegador visible)
+npx playwright test e2e-tests/full-flows.spec.js --headed
 
 # Ejecutar test de login
-npx playwright test login.spec.js
+npx playwright test e2e-tests/login.spec.js --headed
 
 # Ejecutar todos los tests E2E
 npx playwright test
@@ -187,44 +187,46 @@ Las capturas de formulario lleno se toman justo antes del submit mediante el cal
 
 ### Screenshots generados
 
-#### Portal RRHH (17 capturas)
-
-| Archivo | Contenido |
-|---|---|
-| `01-dashboard.png` | Dashboard post-login |
-| `02-empleados-form.png` | Modal de creación de empleado con campos llenos |
-| `02-empleados.png` | Toast de empleado creado |
-| `03-documentos-form.png` | Modal de subida de documento con campos llenos |
-| `03-documentos.png` | Documento subido exitosamente |
-| `04-solicitudes-form.png` | Filtro de solicitudes aplicado |
-| `04-solicitudes.png` | Solicitud aprobada |
-| `05-comunicados-form.png` | Modal de nuevo comunicado lleno |
-| `05-comunicados.png` | Comunicado creado |
-| `06-beneficios-form.png` | Modal de nuevo beneficio lleno |
-| `06-beneficios.png` | Beneficio creado |
-| `07-nomina-form.png` | Modal de registro de nómina lleno |
-| `07-nomina.png` | Registro creado |
-| `08-usuarios-form.png` | Modal de nuevo usuario lleno |
-| `08-usuarios.png` | Usuario creado |
-| `09-reportes.png` | Reportes cargados |
-| `10-dashboard-final.png` | Dashboard al finalizar |
-
-#### Portal Colaborador (12 capturas)
+#### Portal RRHH (19 capturas)
 
 | Archivo | Contenido |
 |---|---|
 | `01-dashboard.png` | Dashboard post-login |
 | `02-perfil-form.png` | Formulario de edición de perfil lleno |
-| `02-perfil.png` | Perfil actualizado |
-| `03-documentos.png` | Documentos personales |
-| `04-solicitudes-vac-form.png` | Formulario de vacaciones lleno |
-| `04-solicitudes-const-form.png` | Formulario de constancia lleno |
-| `04-solicitudes.png` | Solicitud creada |
-| `05-mi-equipo.png` | Solicitudes del equipo (managers) |
-| `06-comunicados.png` | Comunicados visibles |
-| `07-beneficios.png` | Diálogo de canje |
-| `08-nomina.png` | Recibos de nómina |
-| `09-dashboard-final.png` | Dashboard final |
+| `02-perfil.png` | Perfil actualizado (toast) |
+| `03-empleados-form.png` | Modal de creación de empleado con campos llenos |
+| `03-empleados.png` | Toast de empleado creado |
+| `04-documentos-form.png` | Modal de subida de documento con campos llenos |
+| `04-documentos.png` | Documento subido exitosamente |
+| `05-solicitudes-form.png` | Filtro de solicitudes aplicado |
+| `05-solicitudes.png` | Solicitud aprobada (toast) |
+| `06-comunicados-form.png` | Modal de nuevo comunicado lleno |
+| `06-comunicados.png` | Comunicado creado y visible en lista |
+| `07-beneficios-form.png` | Modal de nuevo beneficio lleno |
+| `07-beneficios.png` | Beneficio creado y visible en lista |
+| `08-nomina-form.png` | Modal de registro de nómina lleno |
+| `08-nomina.png` | Registro de nómina creado |
+| `09-usuarios-form.png` | Modal de nuevo usuario Keycloak lleno |
+| `09-usuarios.png` | Usuario creado (toast) |
+| `10-reportes.png` | Panel de reportes con gráficas cargadas |
+| `11-dashboard-final.png` | Dashboard al finalizar el flujo |
+
+#### Portal Colaborador (11 capturas)
+
+| Archivo | Contenido |
+|---|---|
+| `01-dashboard.png` | Dashboard post-login |
+| `02-perfil-form.png` | Formulario de edición de perfil lleno (teléfono, sede, emergencia) |
+| `02-perfil.png` | Perfil actualizado (toast “Perfil actualizado exitosamente”) |
+| `03-documentos.png` | Documentos personales con búsqueda activa |
+| `04-solicitudes-vac-form.png` | Formulario de vacaciones lleno (fechas + motivo) |
+| `04-solicitudes-const-form.png` | Formulario de constancia lleno (tipo + motivo) |
+| `04-solicitudes.png` | Toast de solicitud creada exitosamente |
+| `05-mi-equipo.png` | Solicitudes del equipo (solo usuarios con rol `jefe_inmediato`) |
+| `06-comunicados.png` | Comunicados activos visibles |
+| `07-beneficios.png` | Tarjetas de beneficios corporativos (vista de solo lectura) |
+| `08-nomina.png` | Comprobantes de nómina del colaborador |
+| `09-dashboard-final.png` | Dashboard al finalizar el flujo |
 
 ---
 
