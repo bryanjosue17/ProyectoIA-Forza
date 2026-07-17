@@ -1,6 +1,8 @@
 param(
     [switch]$Build,           # Legacy: construir imagenes localmente en lugar de usar GHCR
     [string]$ImageTag = "",
+    [ValidateSet("develop","production")]
+    [string]$Environment = "develop",  # develop = imagen :develop (local); production = :main
     [switch]$SkipMigrations
 )
 
@@ -26,7 +28,7 @@ if ($Build) {
         $ImageTag = (git -C $Root rev-parse --short HEAD 2>$null) -replace '\s',''
         if (-not $ImageTag) { $ImageTag = "latest" }
     }
-    Write-Host "Mode: LOCAL build  tag=$ImageTag" -ForegroundColor DarkGray
+    Write-Host "Image tag: $ImageTag  Environment: $Environment" -ForegroundColor DarkGray
     & (Join-Path $PSScriptRoot "build.ps1") -ImageTag $ImageTag
     $ColabImage = "peopleportal-frontend-colaborador:${ImageTag}"
     $RrhhImage  = "peopleportal-frontend-rrhh:${ImageTag}"
@@ -70,16 +72,21 @@ kubectl wait --for=condition=ready pod -l app=keycloak -n peopleportal --timeout
 
 # ── Phase 3: Database migrations ──────────────────────────────────────────
 if (-not $SkipMigrations) {
-    Write-Host "`n[Phase 3] Running database migrations..." -ForegroundColor Yellow
-    kubectl apply -f (Join-Path $BackEndK8s "migration-job.yaml")
+    Write-Host "`n[Phase 3] Running database migrations (overlay: $Environment)..." -ForegroundColor Yellow
+    # Eliminar job previo (completado) para permitir re-ejecución limpia
+    kubectl delete job peopleportal-migrations --ignore-not-found -n peopleportal | Out-Null
+    kubectl apply -k (Join-Path $BackEndK8s "overlays\$Environment")
     kubectl wait --for=condition=complete job/peopleportal-migrations -n peopleportal --timeout=180s
 }
 
 # ── Phase 4: API ───────────────────────────────────────────────────────────
-Write-Host "`n[Phase 4] Deploying API..." -ForegroundColor Yellow
-kubectl apply -f (Join-Path $BackEndK8s "api.yaml")kubectl set image deployment/peopleportal-api api=$ApiImage -n peopleportal
+Write-Host "`n[Phase 4] Deploying API (overlay: $Environment)..." -ForegroundColor Yellow
+kubectl apply -k (Join-Path $BackEndK8s "overlays\$Environment")
+Write-Host "  Rolling out API pods..." -ForegroundColor Gray
+kubectl rollout restart deployment/peopleportal-api -n peopleportal
+
 # ── Phase 5: Frontends ────────────────────────────────────────────────────
-Write-Host "`n[Phase 5] Deploying Frontends..." -ForegroundColor Yellow
+Write-Host "`n[Phase 5] Deploying Frontends (overlay: $Environment)..." -ForegroundColor Yellow
 
 # Crear/actualizar imagePullSecret para GHCR
 Write-Host "  Updating GHCR imagePullSecret..." -ForegroundColor Gray
@@ -92,13 +99,15 @@ if ($GhToken) {
         --namespace=peopleportal `
         --dry-run=client -o yaml | kubectl apply -f - | Out-Null
 }
-kubectl apply -f (Join-Path $ColabK8s "frontend-colaborador.yaml")
-kubectl apply -f (Join-Path $RrhhK8s  "frontend-rrhh.yaml")
 
-# kubectl set image con tag único → rolling update automático
-Write-Host "  Updating image: colaborador=$ColabImage  rrhh=$RrhhImage" -ForegroundColor Gray
-kubectl set image deployment/frontend-colaborador nginx=$ColabImage -n peopleportal
-kubectl set image deployment/frontend-rrhh        nginx=$RrhhImage  -n peopleportal
+# Aplicar overlays via Kustomize
+kubectl apply -k (Join-Path $ColabK8s "overlays\$Environment")
+kubectl apply -k (Join-Path $RrhhK8s  "overlays\$Environment")
+
+# rollout restart fuerza nuevos pods que tiran imagen con imagePullPolicy:Always
+Write-Host "  Rolling out frontend pods (env=$Environment)..." -ForegroundColor Gray
+kubectl rollout restart deployment/frontend-colaborador -n peopleportal
+kubectl rollout restart deployment/frontend-rrhh        -n peopleportal
 
 # ── Phase 6: Ingress (optional) ────────────────────────────────────────────
 $ingressPath = Join-Path $GlobalK8s "ingress.yaml"
