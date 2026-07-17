@@ -27,7 +27,8 @@ Este repositorio es un **monorepo** que gestiona tres subproyectos independiente
 Ver [`docs/`](./docs/README.md) para la documentación de infraestructura y arquitectura del sistema completo:
 
 - [Arquitectura global](./docs/arquitectura.md) — diagrama de sistema, puertos K8s y roles
-- [Guía de despliegue](./docs/despliegue.md) — build, K8s, scripts y CI/CD
+- [Guía de despliegue](./docs/despliegue.md) — GHCR, K8s, scripts y CI/CD
+- [Pruebas E2E](./docs/playwright.md) — Playwright, flujos, screenshots
 - [Plan de implementación](./docs/plan-implementacion.md) — estado del proyecto
 - [ADR-001: React vs Angular](./docs/adr/001-react-en-lugar-de-angular.md) — decisión de stack
 
@@ -38,10 +39,10 @@ Ver [`docs/`](./docs/README.md) para la documentación de infraestructura y arqu
 | Componente | Tecnología |
 |---|---|
 | Backend | .NET 9, Clean Architecture, CQRS, MediatR |
-| Frontend Colaborador | React 19, Vite, MUI v9, Keycloak-js |
-| Frontend RRHH | React 19, Vite, MUI v9, Keycloak-js |
+| Frontend Colaborador | React 19, Vite, MUI v9, AuthContext (ROPC) |
+| Frontend RRHH | React 19, Vite, MUI v9, AuthContext (ROPC) |
 | Base de datos | PostgreSQL 16, EF Core 9 |
-| Autenticación | Keycloak (JWT + PKCE S256) |
+| Autenticación | Keycloak 24 — token endpoint ROPC + JWT Bearer |
 | API Gateway | APISIX con plugin openid-connect |
 | Mensajería | NATS JetStream |
 | Contenedores | Docker + docker-compose |
