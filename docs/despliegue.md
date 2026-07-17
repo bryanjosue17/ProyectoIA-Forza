@@ -52,7 +52,20 @@ cd deploy
 
 # Solo apply de manifiestos (si ya tienes las imágenes)
 .\deploy.ps1
+
+# Linux / macOS
+bash deploy.sh --build
+bash deploy.sh   # solo manifiestos
 ```
+
+> **Nota sobre la imagen `latest`:** Los deployments de frontend usan `imagePullPolicy: Never`
+> con la etiqueta fija `latest`. Esto significa que `kubectl apply` **no reinicia los pods**
+> aunque la imagen haya sido reconstruida. Los scripts incluyen `kubectl rollout restart`
+> automáticamente para garantizar que los pods carguen la imagen nueva.
+> Si redespliegas manualmente, ejecuta:
+> ```bash
+> kubectl rollout restart deployment/frontend-colaborador deployment/frontend-rrhh -n peopleportal
+> ```
 
 ---
 
@@ -84,6 +97,12 @@ kubectl apply -f PeoplePortal-BackEnd/k8s/api.yaml
 kubectl apply -f PeoplePortal-FrontEnd-Colaborador/k8s/frontend-colaborador.yaml
 kubectl apply -f PeoplePortal-FrontEnd-RRHH/k8s/frontend-rrhh.yaml
 
+# IMPORTANTE: rollout restart para cargar imagen :latest reconstruida
+kubectl rollout restart deployment/frontend-colaborador -n peopleportal
+kubectl rollout restart deployment/frontend-rrhh        -n peopleportal
+kubectl rollout status   deployment/frontend-colaborador -n peopleportal
+kubectl rollout status   deployment/frontend-rrhh        -n peopleportal
+
 # ── Ingress (opcional) ────────────────────────────────────────────────────────
 kubectl apply -f k8s/ingress.yaml
 ```
@@ -103,18 +122,22 @@ kubectl get jobs     -n peopleportal
 ## 6. Verificar con tests E2E
 
 ```bash
-# Ejecutar pruebas E2E del Portal RRHH
-cd PeoplePortal-FrontEnd-RRHH
-npx playwright install msedge
-npx playwright test full-flows.spec.js
-
 # Ejecutar pruebas E2E del Portal Colaborador
-cd ../PeoplePortal-FrontEnd-Colaborador
+cd PeoplePortal-FrontEnd-Colaborador
 npx playwright install msedge
-npx playwright test full-flows.spec.js
+npx playwright test e2e-tests/full-flows.spec.js --headed
+
+# Ejecutar pruebas E2E del Portal RRHH
+cd ../PeoplePortal-FrontEnd-RRHH
+npx playwright install msedge
+npx playwright test e2e-tests/full-flows.spec.js --headed
 ```
 
-Los tests generan reporte HTML (`playwright show-report`) y capturas de pantalla en `docs/{app}/screenshots/`.  
+Ver reporte HTML con resultados y capturas por paso:
+```bash
+npx playwright show-report
+```
+
 Ver documentación completa en [`docs/playwright.md`](./playwright.md).
 
 ## 7. URLs de acceso

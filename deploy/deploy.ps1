@@ -54,6 +54,13 @@ Write-Host "`n[Phase 5] Deploying Frontends..." -ForegroundColor Yellow
 kubectl apply -f (Join-Path $ColabK8s "frontend-colaborador.yaml")
 kubectl apply -f (Join-Path $RrhhK8s  "frontend-rrhh.yaml")
 
+# rollout restart forces pods to pick up the newly built :latest image,
+# because imagePullPolicy: Never + same tag means kubectl apply alone
+# does NOT trigger a pod replacement.
+Write-Host "  Rolling out frontend pods to apply new images..." -ForegroundColor Gray
+kubectl rollout restart deployment/frontend-colaborador -n peopleportal
+kubectl rollout restart deployment/frontend-rrhh        -n peopleportal
+
 # ── Phase 6: Ingress (optional) ────────────────────────────────────────────
 $ingressPath = Join-Path $GlobalK8s "ingress.yaml"
 if (Test-Path $ingressPath) {
@@ -62,9 +69,9 @@ if (Test-Path $ingressPath) {
 }
 
 Write-Host "`nWaiting for all pods to be ready..." -ForegroundColor Yellow
-kubectl wait --for=condition=ready pod -l app=peopleportal-api -n peopleportal --timeout=120s
-kubectl wait --for=condition=ready pod -l app=frontend-colaborador -n peopleportal --timeout=120s
-kubectl wait --for=condition=ready pod -l app=frontend-rrhh -n peopleportal --timeout=120s
+kubectl wait --for=condition=ready pod -l app=peopleportal-api     -n peopleportal --timeout=120s
+kubectl rollout status deployment/frontend-colaborador              -n peopleportal --timeout=120s
+kubectl rollout status deployment/frontend-rrhh                    -n peopleportal --timeout=120s
 
 Write-Host "`n===== Deployment complete! =====" -ForegroundColor Green
 Write-Host ""
