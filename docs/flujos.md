@@ -1,5 +1,27 @@
 # Flujos del Sistema — PeoplePortal
 
+## Flujo 0: Autenticación ROPC (login en ambos portales)
+
+```mermaid
+sequenceDiagram
+    participant U as Usuario (Browser)
+    participant Login as LoginPage (React)
+    participant Auth as AuthContext
+    participant KC as Keycloak Token Endpoint
+    participant API as PeoplePortal API
+
+    U->>Login: Introduce usuario y contraseña
+    Login->>Auth: auth.login(username, password)
+    Auth->>KC: POST /realms/peopleportal/protocol/openid-connect/token
+    Note right of KC: grant_type=password<br/>client_id=peopleportal-frontend
+    KC-->>Auth: { access_token, refresh_token }
+    Auth->>Auth: Guarda tokens en sessionStorage<br/>Actualiza keycloak.token (proxy para Axios)
+    Auth->>U: isAuthenticated=true → App renderiza
+    U->>API: Cualquier request con Bearer {access_token}
+```
+
+---
+
 ## Flujo 1: Colaborador solicita vacaciones
 
 ```mermaid
