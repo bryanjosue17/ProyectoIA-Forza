@@ -43,28 +43,26 @@ Tags disponibles: `main` (rama), `develop` (rama) y `{short-sha}` (7 caracteres 
 ## 3. Despliegue completo (scripts automáticos)
 
 ```powershell
-# MODO GHCR (por defecto): usa imágenes de GitHub Container Registry
-# Obtiene el SHA del último CI exitoso en main de cada repo automáticamente
+# DESARROLLO local (Docker Desktop) — imágenes :develop
 .\deploy\deploy.ps1
-.\deploy\deploy.ps1 -SkipMigrations        # saltar migraciones
-.\deploy\deploy.ps1 -ImageTag main          # forzar tag :main
-.\deploy\deploy.ps1 -ImageTag abc1234       # forzar SHA específico
+.\deploy\deploy.ps1 -SkipMigrations
 
-# MODO LOCAL (legacy): build en tu máquina + deploy
+# PRODUCCIÓN — imágenes :main
+.\deploy\deploy.ps1 -Environment production
+
+# MODO LOCAL legacy — build en tu máquina
 .\deploy\deploy.ps1 -Build
 
 # Linux / macOS
-bash deploy/deploy.sh                      # GHCR (por defecto)
-bash deploy/deploy.sh --build              # build local
-bash deploy/deploy.sh --tag main           # forzar tag
+bash deploy/deploy.sh                          # develop (por defecto)
+bash deploy/deploy.sh --environment production  # produccion
+bash deploy/deploy.sh --build                   # build local
 ```
 
-> **GHCR por defecto:** Las imágenes provienen de `ghcr.io/bryanjosue17/...`, publicadas
-> automáticamente por el CI de cada repositorio al hacer push a `main`. El SHA usado
-> es el del último workflow exitoso. No requiere build local.
->
-> **Prerequisito packages públicos:** Los 3 packages de GHCR deben ser públicos.
-> Cambiar desde GitHub: **Profile → Packages → {nombre} → Package settings → Change visibility → Public**
+> **Kustomize:** Los manifiestos usan overlays por entorno:
+> - `overlays/develop/` → imagen `:develop` (Docker Desktop local)
+> - `overlays/production/` → imagen `:main` (producción)
+> El script aplica `kubectl apply -k overlays/{env}/` + `rollout restart`.
 
 ---
 
@@ -92,26 +90,34 @@ kubectl wait --for=condition=complete job/peopleportal-migrations \
 # ── API ───────────────────────────────────────────────────────────────────────
 kubectl apply -f PeoplePortal-BackEnd/k8s/api.yaml
 
-# ── Frontends ─────────────────────────────────────────────────────────────────
-# Crear/actualizar imagePullSecret para GHCR (requiere gh CLI autenticado)
+# ── Frontends (via Kustomize) ────────────────────────────────────────────────
+# Crear imagePullSecret para GHCR
 GH_TOKEN=$(gh auth token)
 kubectl create secret docker-registry ghcr-secret \
-  --docker-server=ghcr.io \
-  --docker-username=bryanjosue17 \
-  --docker-password="$GH_TOKEN" \
-  --namespace=peopleportal \
+  --docker-server=ghcr.io --docker-username=bryanjosue17 \
+  --docker-password="$GH_TOKEN" --namespace=peopleportal \
   --dry-run=client -o yaml | kubectl apply -f -
 
-kubectl apply -f PeoplePortal-FrontEnd-Colaborador/k8s/frontend-colaborador.yaml
-kubectl apply -f PeoplePortal-FrontEnd-RRHH/k8s/frontend-rrhh.yaml
+# develop (Docker Desktop local)
+kubectl apply -k PeoplePortal-FrontEnd-Colaborador/k8s/overlays/develop/
+kubectl apply -k PeoplePortal-FrontEnd-RRHH/k8s/overlays/develop/
 
-# Obtener SHA del último CI exitoso y hacer rolling update con GHCR
-COLAB_SHA=$(gh run list --repo bryanjosue17/PeoplePortal-FrontEnd-Colaborador --branch main --status success --limit 1 --json headSha --jq '.[0].headSha[0:7]')
-RRHH_SHA=$(gh run list --repo bryanjosue17/PeoplePortal-FrontEnd-RRHH --branch main --status success --limit 1 --json headSha --jq '.[0].headSha[0:7]')
-kubectl set image deployment/frontend-colaborador nginx=ghcr.io/bryanjosue17/peopleportal-frontend-colaborador:$COLAB_SHA -n peopleportal
-kubectl set image deployment/frontend-rrhh        nginx=ghcr.io/bryanjosue17/peopleportal-frontend-rrhh:$RRHH_SHA       -n peopleportal
-kubectl rollout status deployment/frontend-colaborador -n peopleportal
-kubectl rollout status deployment/frontend-rrhh        -n peopleportal
+# production
+# kubectl apply -k PeoplePortal-FrontEnd-Colaborador/k8s/overlays/production/
+# kubectl apply -k PeoplePortal-FrontEnd-RRHH/k8s/overlays/production/
+
+kubectl rollout restart deployment/frontend-colaborador -n peopleportal
+kubectl rollout restart deployment/frontend-rrhh        -n peopleportal
+kubectl rollout status   deployment/frontend-colaborador -n peopleportal
+kubectl rollout status   deployment/frontend-rrhh        -n peopleportal
+
+# ── API + Migrations (via Kustomize) ───────────────────────────────────────
+kubectl delete job peopleportal-migrations --ignore-not-found -n peopleportal
+kubectl apply -k PeoplePortal-BackEnd/k8s/overlays/develop/
+kubectl wait --for=condition=complete job/peopleportal-migrations \
+  -n peopleportal --timeout=180s
+kubectl rollout restart deployment/peopleportal-api -n peopleportal
+kubectl rollout status   deployment/peopleportal-api -n peopleportal
 
 # ── Ingress (opcional) ────────────────────────────────────────────────────────
 kubectl apply -f k8s/ingress.yaml
