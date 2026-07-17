@@ -3,7 +3,8 @@ set -euo pipefail
 
 BUILD=false
 SKIP_MIGRATIONS=false
-IMAGE_TAG="latest"
+IMAGE_TAG=""
+GHCR="ghcr.io/bryanjosue17"
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 GLOBAL_K8S="$ROOT/k8s"
@@ -14,9 +15,9 @@ RRHH_K8S="$ROOT/PeoplePortal-FrontEnd-RRHH/k8s"
 usage() {
     echo "Usage: $0 [--build] [--skip-migrations] [--tag <tag>]"
     echo ""
-    echo "  --build             Build Docker images before deploying"
+    echo "  --build             Legacy: build images locally instead of using GHCR"
     echo "  --skip-migrations   Skip the database migration job"
-    echo "  --tag <tag>         Docker image tag (default: latest)"
+    echo "  --tag <tag>         Force a specific image tag (default: latest CI SHA from main)"
     exit 1
 }
 
@@ -31,33 +32,54 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-# ── Build ─────────────────────────────────────────────────────────────────────
+# ── Resolver tags de imagen ────────────────────────────────────────────────────
+get_ci_sha() {
+    gh run list --repo "bryanjosue17/$1" --branch main --status success --limit 1 \
+        --json headSha --jq ".[0].headSha[0:7]" 2>/dev/null || echo "main"
+}
+
 if [ "$BUILD" = true ]; then
+    LOCAL_TAG="${IMAGE_TAG:-$(git -C "$ROOT" rev-parse --short HEAD 2>/dev/null || echo 'latest')}"
+    echo "Mode: LOCAL build  tag=$LOCAL_TAG"
     echo "===== Building all PeoplePortal images ====="
 
-    echo -e "\n[1/4] Building peopleportal-api:${IMAGE_TAG}..."
+    echo -e "\n[1/4] Building peopleportal-api:${LOCAL_TAG}..."
     docker compose -f "$ROOT/docker-compose.yml" build api
 
-    echo -e "\n[2/4] Building peopleportal-api-migrations:${IMAGE_TAG}..."
+    echo -e "\n[2/4] Building peopleportal-api-migrations:${LOCAL_TAG}..."
     docker compose -f "$ROOT/docker-compose.yml" build migrations
 
-    echo -e "\n[3/4] Building peopleportal-frontend-colaborador:${IMAGE_TAG}..."
+    echo -e "\n[3/4] Building peopleportal-frontend-colaborador:${LOCAL_TAG}..."
     pushd "$ROOT/PeoplePortal-FrontEnd-Colaborador" > /dev/null
     docker build --no-cache \
         --build-arg VITE_API_URL="" \
         --build-arg VITE_KEYCLOAK_URL="http://localhost:30080" \
-        -t "peopleportal-frontend-colaborador:${IMAGE_TAG}" .
+        -t "peopleportal-frontend-colaborador:${LOCAL_TAG}" .
     popd > /dev/null
 
-    echo -e "\n[4/4] Building peopleportal-frontend-rrhh:${IMAGE_TAG}..."
+    echo -e "\n[4/4] Building peopleportal-frontend-rrhh:${LOCAL_TAG}..."
     pushd "$ROOT/PeoplePortal-FrontEnd-RRHH" > /dev/null
     docker build --no-cache \
         --build-arg VITE_API_URL="" \
         --build-arg VITE_KEYCLOAK_URL="http://localhost:30080" \
-        -t "peopleportal-frontend-rrhh:${IMAGE_TAG}" .
+        -t "peopleportal-frontend-rrhh:${LOCAL_TAG}" .
     popd > /dev/null
 
+    COLAB_IMAGE="peopleportal-frontend-colaborador:${LOCAL_TAG}"
+    RRHH_IMAGE="peopleportal-frontend-rrhh:${LOCAL_TAG}"
+    API_IMAGE="peopleportal-api:${LOCAL_TAG}"
     echo -e "\n===== Build complete! ====="
+else
+    echo "Mode: GHCR  (fetching latest CI SHAs...)"
+    COLAB_SHA="${IMAGE_TAG:-$(get_ci_sha PeoplePortal-FrontEnd-Colaborador)}"
+    RRHH_SHA="${IMAGE_TAG:-$(get_ci_sha PeoplePortal-FrontEnd-RRHH)}"
+    API_SHA="${IMAGE_TAG:-$(get_ci_sha PeoplePortal-BackEnd)}"
+    COLAB_IMAGE="${GHCR}/peopleportal-frontend-colaborador:${COLAB_SHA}"
+    RRHH_IMAGE="${GHCR}/peopleportal-frontend-rrhh:${RRHH_SHA}"
+    API_IMAGE="${GHCR}/peopleportal-api:${API_SHA}"
+    echo "  colaborador : $COLAB_IMAGE"
+    echo "  rrhh        : $RRHH_IMAGE"
+    echo "  api         : $API_IMAGE"
 fi
 
 echo -e "\n===== Deploying PeoplePortal to Kubernetes ====="
@@ -90,16 +112,17 @@ fi
 # ── Phase 4: API ──────────────────────────────────────────────────────────────
 echo -e "\n[Phase 4] Deploying API..."
 kubectl apply -f "$BACKEND_K8S/api.yaml"
+kubectl set image deployment/peopleportal-api api="$API_IMAGE" -n peopleportal
 
-# ── Phase 5: Frontends ────────────────────────────────────────────────────────
+# ── Phase 5: Frontends ────────────────────────────────────────────────────────────────────────────
 echo -e "\n[Phase 5] Deploying Frontends..."
 kubectl apply -f "$COLAB_K8S/frontend-colaborador.yaml"
 kubectl apply -f "$RRHH_K8S/frontend-rrhh.yaml"
 
-# kubectl set image detecta cambio de tag → rolling update automático sin rollout restart
-echo "  Updating frontend images to tag: $IMAGE_TAG"
-kubectl set image deployment/frontend-colaborador nginx="peopleportal-frontend-colaborador:${IMAGE_TAG}" -n peopleportal
-kubectl set image deployment/frontend-rrhh        nginx="peopleportal-frontend-rrhh:${IMAGE_TAG}"       -n peopleportal
+# kubectl set image con tag único → rolling update automático
+echo "  Updating images: colaborador=$COLAB_IMAGE  rrhh=$RRHH_IMAGE"
+kubectl set image deployment/frontend-colaborador nginx="$COLAB_IMAGE" -n peopleportal
+kubectl set image deployment/frontend-rrhh        nginx="$RRHH_IMAGE"  -n peopleportal
 
 # ── Phase 6: Ingress (optional) ───────────────────────────────────────────────
 if [ -f "$GLOBAL_K8S/ingress.yaml" ]; then

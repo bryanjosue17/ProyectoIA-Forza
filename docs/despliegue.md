@@ -45,24 +45,28 @@ Genera 4 imágenes locales:
 ## 3. Despliegue completo (scripts automáticos)
 
 ```powershell
-cd deploy
+# MODO GHCR (por defecto): usa imágenes de GitHub Container Registry
+# Obtiene el SHA del último CI exitoso en main de cada repo automáticamente
+.\deploy\deploy.ps1
+.\deploy\deploy.ps1 -SkipMigrations        # saltar migraciones
+.\deploy\deploy.ps1 -ImageTag main          # forzar tag :main
+.\deploy\deploy.ps1 -ImageTag abc1234       # forzar SHA específico
 
-# Build + deploy en un solo paso
-.\deploy.ps1 -Build
-
-# Solo apply de manifiestos (si ya tienes las imágenes)
-.\deploy.ps1
+# MODO LOCAL (legacy): build en tu máquina + deploy
+.\deploy\deploy.ps1 -Build
 
 # Linux / macOS
-bash deploy.sh --build
-bash deploy.sh   # solo manifiestos
+bash deploy/deploy.sh                      # GHCR (por defecto)
+bash deploy/deploy.sh --build              # build local
+bash deploy/deploy.sh --tag main           # forzar tag
 ```
 
-> **Auto-rolling update con SHA tag:** Los scripts calculan automáticamente el **git short SHA**
-> del commit actual como tag de imagen (ej. `peopleportal-frontend-rrhh:a1b2c3d`). Al usar
-> `kubectl set image` con un tag único por build, Kubernetes detecta el cambio y activa un
-> **rolling update automático** sin necesidad de `rollout restart`. Los pods nuevos reemplazan
-> a los viejos sin downtime. Para forzar un tag específico: `deploy.ps1 -Build -ImageTag v1.2.3`
+> **GHCR por defecto:** Las imágenes provienen de `ghcr.io/bryanjosue17/...`, publicadas
+> automáticamente por el CI de cada repositorio al hacer push a `main`. El SHA usado
+> es el del último workflow exitoso. No requiere build local.
+>
+> **Prerequisito packages públicos:** Los 3 packages de GHCR deben ser públicos.
+> Cambiar desde GitHub: **Profile → Packages → {nombre} → Package settings → Change visibility → Public**
 
 ---
 
