@@ -26,12 +26,12 @@ flowchart TB
         end
 
         subgraph Data["Persistencia"]
-            SQL["PostgreSQL 16\n:1433"]
+            SQL["PostgreSQL 16\n:5432"]
         end
     end
 
-    ColabApp -->|SSO PKCE S256| KC
-    RRHHApp  -->|SSO PKCE S256| KC
+    ColabApp -->|ROPC Login| KC
+    RRHHApp  -->|ROPC Login| KC
     ColabApp -->|proxy nginx /api/| API
     RRHHApp  -->|proxy nginx /api/| API
     API      --> KC
