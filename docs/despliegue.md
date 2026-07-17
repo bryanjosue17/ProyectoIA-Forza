@@ -23,22 +23,20 @@ git submodule update --init --recursive
 
 ---
 
-## 2. Build de imágenes Docker
+## 2. Imágenes Docker (GHCR)
 
-```powershell
-# Desde la raíz del repositorio
-cd deploy
-.\build.ps1
-```
+Las imágenes se publican automáticamente en **GitHub Container Registry** por el CI de cada repositorio al hacer push a `main` o `develop`.
 
-Genera 4 imágenes locales:
-
-| Imagen | Fuente |
+| Imagen GHCR | Repo fuente |
 |---|---|
-| `peopleportal-api:latest` | `PeoplePortal-BackEnd/` |
-| `peopleportal-api-migrations:latest` | `PeoplePortal-BackEnd/` |
-| `peopleportal-frontend-colaborador:latest` | `PeoplePortal-FrontEnd-Colaborador/` |
-| `peopleportal-frontend-rrhh:latest` | `PeoplePortal-FrontEnd-RRHH/` |
+| `ghcr.io/bryanjosue17/peopleportal-api:main` | `PeoplePortal-BackEnd/` |
+| `ghcr.io/bryanjosue17/peopleportal-api-migrations:main` | `PeoplePortal-BackEnd/` |
+| `ghcr.io/bryanjosue17/peopleportal-frontend-colaborador:main` | `PeoplePortal-FrontEnd-Colaborador/` |
+| `ghcr.io/bryanjosue17/peopleportal-frontend-rrhh:main` | `PeoplePortal-FrontEnd-RRHH/` |
+
+Tags disponibles: `main` (rama), `develop` (rama) y `{short-sha}` (7 caracteres del commit).
+
+> **Build local (legacy):** Si necesitas construir sin CI, usa `deploy/build.ps1` o `deploy/deploy.ps1 -Build`.
 
 ---
 
@@ -95,13 +93,23 @@ kubectl wait --for=condition=complete job/peopleportal-migrations \
 kubectl apply -f PeoplePortal-BackEnd/k8s/api.yaml
 
 # ── Frontends ─────────────────────────────────────────────────────────────────
+# Crear/actualizar imagePullSecret para GHCR (requiere gh CLI autenticado)
+GH_TOKEN=$(gh auth token)
+kubectl create secret docker-registry ghcr-secret \
+  --docker-server=ghcr.io \
+  --docker-username=bryanjosue17 \
+  --docker-password="$GH_TOKEN" \
+  --namespace=peopleportal \
+  --dry-run=client -o yaml | kubectl apply -f -
+
 kubectl apply -f PeoplePortal-FrontEnd-Colaborador/k8s/frontend-colaborador.yaml
 kubectl apply -f PeoplePortal-FrontEnd-RRHH/k8s/frontend-rrhh.yaml
 
-# Usar tag del git SHA actual para forzar rolling update automático
-SHA=$(git rev-parse --short HEAD)
-kubectl set image deployment/frontend-colaborador nginx=peopleportal-frontend-colaborador:$SHA -n peopleportal
-kubectl set image deployment/frontend-rrhh        nginx=peopleportal-frontend-rrhh:$SHA       -n peopleportal
+# Obtener SHA del último CI exitoso y hacer rolling update con GHCR
+COLAB_SHA=$(gh run list --repo bryanjosue17/PeoplePortal-FrontEnd-Colaborador --branch main --status success --limit 1 --json headSha --jq '.[0].headSha[0:7]')
+RRHH_SHA=$(gh run list --repo bryanjosue17/PeoplePortal-FrontEnd-RRHH --branch main --status success --limit 1 --json headSha --jq '.[0].headSha[0:7]')
+kubectl set image deployment/frontend-colaborador nginx=ghcr.io/bryanjosue17/peopleportal-frontend-colaborador:$COLAB_SHA -n peopleportal
+kubectl set image deployment/frontend-rrhh        nginx=ghcr.io/bryanjosue17/peopleportal-frontend-rrhh:$RRHH_SHA       -n peopleportal
 kubectl rollout status deployment/frontend-colaborador -n peopleportal
 kubectl rollout status deployment/frontend-rrhh        -n peopleportal
 
