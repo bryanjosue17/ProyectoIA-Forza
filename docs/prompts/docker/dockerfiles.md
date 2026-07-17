@@ -1,7 +1,9 @@
 # Prompt — Dockerfile y Docker Compose
 
 ## Contexto
-Proyecto PeoplePortal. Tres imágenes: API .NET 9, Frontend Colaborador (React/Vite/Nginx), Frontend RRHH (React/Vite/Nginx).
+Proyecto PeoplePortal. Cuatro imágenes: API .NET 9, API Migrations, Frontend Colaborador (React/Vite/Nginx), Frontend RRHH.
+Imágenes publicadas en GHCR: `ghcr.io/bryanjosue17/...` con tags branch y short-sha.
+Node.js versión: **20-alpine** (no 22).
 
 ---
 

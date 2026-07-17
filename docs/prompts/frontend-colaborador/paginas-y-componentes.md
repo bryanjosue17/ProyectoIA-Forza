@@ -1,8 +1,142 @@
 # Prompt — Frontend Colaborador (React 19 + Vite + MUI)
 
 ## Contexto
-SPA React 19, Vite, Material UI v9, Keycloak-js + @react-keycloak/web. Portal del empleado en puerto 30081.
-Páginas: Dashboard, Solicitudes, Documentos, Comunicados, Beneficios, Perfil.
+SPA React 19, Vite, Material UI v9. Portal del empleado en puerto 30081.
+Auth: **AuthContext personalizado con ROPC** (formulario de login propio → POST directo al token endpoint de Keycloak). NO usa ReactKeycloakProvider ni redirección PKCE.
+Módulos: Dashboard, Perfil, Documentos, Solicitudes, Mi Equipo (managers), Comunicados, Beneficios, Nómina.
+
+---
+
+## Prompt 1: AuthContext con ROPC (Resource Owner Password Credentials)
+
+```
+Genera el sistema de autenticación para el Portal Colaborador de PeoplePortal usando
+React 19 y un enfoque ROPC directo (sin redirección PKCE).
+
+Requiero:
+
+1. src/keycloak.js
+   - Instancia Keycloak con: url=VITE_KEYCLOAK_URL||'http://localhost:30080',
+     realm='peopleportal', clientId='peopleportal-frontend'
+   - NO llama a keycloak.init() — se usa solo como proxy de token para el interceptor Axios
+
+2. src/context/AuthContext.jsx
+   - AuthProvider con estado: { isAuthenticated, user (tokenParsed), loading }
+   - función login(username, password): hace POST al endpoint de token Keycloak con
+     grant_type=password, guarda access_token/refresh_token en sessionStorage
+   - función logout(): limpia sessionStorage, redirige al login
+   - applyTokensToKeycloak(tokenData): inyecta el token en el objeto keycloak.js
+     para que el interceptor Axios pueda leerlo de keycloak.token
+   - Auto-refresh del token cuando quedan menos de 30s para expirar
+   - Claves sessionStorage: 'pp-colab-token' y 'pp-colab-refresh'
+
+3. src/pages/Login/LoginPage.jsx
+   - Formulario con campos usuario y contraseña
+   - Llama a auth.login() del contexto
+   - Muestra error si login falla
+
+4. Modificar App.jsx para:
+   - Envolver con <AuthProvider>
+   - Mostrar <LoginPage> si !isAuthenticated
+   - Mostrar <Layout> con las rutas si isAuthenticated
+```
+
+---
+
+## Prompt 2: Layout principal con glassmorphism, DiceAvatar y modo oscuro
+
+```
+Genera el componente Layout.jsx para el Portal Colaborador de PeoplePortal usando
+Material UI v9. El layout incluye:
+
+1. AppBar con efecto glassmorphism:
+   - background: linear-gradient rgba con backdropFilter: blur(16px)
+   - Título dinámico basado en la ruta activa (useLocation)
+   - Icono de notificaciones con badge (unreadCount del NotificationsContext)
+   - Selector de tema (light/dark/system) con menú
+   - Nombre del usuario + DiceAvatar (componente que usa dicebear.com/7.x/lorelei/svg
+     con seed=email del usuario) — el mismo avatar que aparece en el módulo de Perfil
+
+2. Drawer lateral con navegación:
+   - Logo "PeoplePortal" con gradiente azul (linear-gradient #60A5FA, #3B82F6)
+   - Ítems: Dashboard, Mi Perfil, Mis Documentos, Solicitudes, Comunicados, Beneficios, Nómina
+   - Ítem "Mi Equipo" visible solo si el usuario tiene rol 'jefe_inmediato'
+     (roles desde auth.user.realm_access.roles)
+   - Ítem activo: borderLeft '4px solid', background gradient
+   - Hover: translateX(3px)
+
+3. DiceAvatar component (src/components/DiceAvatar.jsx):
+   - Props: seed (string), size (number), sx (object)
+   - Genera URL: https://api.dicebear.com/7.x/lorelei/svg?seed=EMAIL&backgroundColor=...
+   - Renderiza MUI Avatar con src={url}
+
+4. Área de contenido principal con padding responsivo
+```
+
+---
+
+## Prompt 3: Página Dashboard del Colaborador
+
+```
+Genera el componente Dashboard.jsx para el portal del colaborador de PeoplePortal usando
+React 19, Material UI v9 y DiceAvatar.
+
+El dashboard muestra:
+1. Saludo personalizado con el nombre del usuario (useAuth().user)
+   y su DiceAvatar circular (seed=email, tamaño 90px)
+2. Tarjetas de estadísticas (Grid): Solicitudes Pendientes, Documentos,
+   Comunicados Activos
+3. Sección de Comunicados Recientes (últimos 3)
+4. Usa getMyProfile para el perfil y getDashboard para los KPIs
+5. Skeleton de carga (MUI Skeleton) mientras se obtienen los datos
+```
+
+---
+
+## Prompt 4: Módulo de Solicitudes (Vacaciones, Constancias, Vouchers)
+
+```
+Genera el componente Requests.jsx para el portal colaborador con:
+1. Tabs: Vacaciones | Constancias | Vouchers
+2. Por cada tab: formulario inline (sin modal) con los campos del tipo de solicitud
+   - Vacaciones: startDate (date), endDate (date), reason (text, requerido)
+     validación: fechas deben ser futuras, endDate >= startDate
+   - Constancia: certificateType (select: Trabajo/Salario/Vacaciones/Otro), reason
+   - Voucher: period (select meses), year (number), reason
+3. Botón "Enviar Solicitud" → POST /api/requests/vacation|certificate|voucher
+4. Tabla paginada de mis solicitudes con filtro de estado
+5. Botón "Cancelar" en solicitudes con estado 'Submitted'
+6. useFormik + Yup para validación en cada tab
+```
+
+---
+
+## Prompt 5: Módulo Mi Equipo (solo jefe_inmediato)
+
+```
+Genera el componente TeamRequests.jsx para el portal colaborador:
+1. Solo visible para usuarios con rol 'jefe_inmediato'
+2. Lista de solicitudes del equipo: GET /api/manager/requests
+3. Para cada solicitud Submitted/InReview: botones "Aprobar" y "Rechazar"
+4. Dialog de aprobación/rechazo con campo opcional hrComment
+5. PATCH /api/manager/requests/{id}/status con { status, hrComment }
+6. toast.success/error con el resultado
+```
+
+---
+
+## Prompt 6: Módulo Nómina (comprobantes de pago)
+
+```
+Genera el componente Nomina.jsx para el portal colaborador:
+1. Título "Mis Comprobantes de Nómina" (Typography h5, MonetizationOnIcon)
+2. GET /api/nomina/me para obtener los registros
+3. Tabla con columnas: Período, Tipo (Chip con color), Estado (Chip), Notas, Fecha
+4. Filtro por tipo (ComprobanteDepago/Bonificacion/Adelanto/Aguinaldo/etc.)
+5. Si status='AvailableForDownload' y tiene fileUrl: botón "Descargar"
+6. Skeleton de carga y estado vacío con ícono
+7. NominaType labels en español: ComprobanteDepago='Comprobante de Pago', etc.
+```
 
 ---
 
