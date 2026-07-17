@@ -1,6 +1,6 @@
 param(
     [switch]$Build,
-    [string]$ImageTag = "latest",
+    [string]$ImageTag = "",
     [switch]$SkipMigrations
 )
 
@@ -10,6 +10,13 @@ $GlobalK8s  = Join-Path $Root "k8s"
 $BackEndK8s = Join-Path $Root "PeoplePortal-BackEnd\k8s"
 $ColabK8s   = Join-Path $Root "PeoplePortal-FrontEnd-Colaborador\k8s"
 $RrhhK8s    = Join-Path $Root "PeoplePortal-FrontEnd-RRHH\k8s"
+
+# Resolver tag: git SHA si no se pasa explícitamente
+if (-not $ImageTag) {
+    $ImageTag = (git -C $Root rev-parse --short HEAD 2>$null) -replace '\s',''
+    if (-not $ImageTag) { $ImageTag = "latest" }
+}
+Write-Host "Image tag: $ImageTag" -ForegroundColor DarkGray
 
 if ($Build) {
     & (Join-Path $PSScriptRoot "build.ps1") -ImageTag $ImageTag
@@ -54,12 +61,10 @@ Write-Host "`n[Phase 5] Deploying Frontends..." -ForegroundColor Yellow
 kubectl apply -f (Join-Path $ColabK8s "frontend-colaborador.yaml")
 kubectl apply -f (Join-Path $RrhhK8s  "frontend-rrhh.yaml")
 
-# rollout restart forces pods to pick up the newly built :latest image,
-# because imagePullPolicy: Never + same tag means kubectl apply alone
-# does NOT trigger a pod replacement.
-Write-Host "  Rolling out frontend pods to apply new images..." -ForegroundColor Gray
-kubectl rollout restart deployment/frontend-colaborador -n peopleportal
-kubectl rollout restart deployment/frontend-rrhh        -n peopleportal
+# kubectl set image detecta cambio de tag → rolling update automático sin rollout restart
+Write-Host "  Updating frontend images to tag: $ImageTag" -ForegroundColor Gray
+kubectl set image deployment/frontend-colaborador nginx="peopleportal-frontend-colaborador:${ImageTag}" -n peopleportal
+kubectl set image deployment/frontend-rrhh        nginx="peopleportal-frontend-rrhh:${ImageTag}"       -n peopleportal
 
 # ── Phase 6: Ingress (optional) ────────────────────────────────────────────
 $ingressPath = Join-Path $GlobalK8s "ingress.yaml"
