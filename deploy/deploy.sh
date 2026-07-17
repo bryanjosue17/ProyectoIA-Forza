@@ -116,6 +116,18 @@ kubectl set image deployment/peopleportal-api api="$API_IMAGE" -n peopleportal
 
 # ── Phase 5: Frontends ────────────────────────────────────────────────────────────────────────────
 echo -e "\n[Phase 5] Deploying Frontends..."
+
+# Crear/actualizar imagePullSecret para GHCR
+echo "  Updating GHCR imagePullSecret..."
+GH_TOKEN=$(gh auth token 2>/dev/null || true)
+if [ -n "$GH_TOKEN" ]; then
+    kubectl create secret docker-registry ghcr-secret \
+        --docker-server=ghcr.io \
+        --docker-username=bryanjosue17 \
+        --docker-password="$GH_TOKEN" \
+        --namespace=peopleportal \
+        --dry-run=client -o yaml | kubectl apply -f - > /dev/null
+fi
 kubectl apply -f "$COLAB_K8S/frontend-colaborador.yaml"
 kubectl apply -f "$RRHH_K8S/frontend-rrhh.yaml"
 

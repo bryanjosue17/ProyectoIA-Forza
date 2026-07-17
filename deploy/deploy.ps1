@@ -80,6 +80,18 @@ Write-Host "`n[Phase 4] Deploying API..." -ForegroundColor Yellow
 kubectl apply -f (Join-Path $BackEndK8s "api.yaml")kubectl set image deployment/peopleportal-api api=$ApiImage -n peopleportal
 # ── Phase 5: Frontends ────────────────────────────────────────────────────
 Write-Host "`n[Phase 5] Deploying Frontends..." -ForegroundColor Yellow
+
+# Crear/actualizar imagePullSecret para GHCR
+Write-Host "  Updating GHCR imagePullSecret..." -ForegroundColor Gray
+$GhToken = (gh auth token 2>$null) -replace '\s',''
+if ($GhToken) {
+    kubectl create secret docker-registry ghcr-secret `
+        --docker-server=ghcr.io `
+        --docker-username=bryanjosue17 `
+        --docker-password=$GhToken `
+        --namespace=peopleportal `
+        --dry-run=client -o yaml | kubectl apply -f - | Out-Null
+}
 kubectl apply -f (Join-Path $ColabK8s "frontend-colaborador.yaml")
 kubectl apply -f (Join-Path $RrhhK8s  "frontend-rrhh.yaml")
 
