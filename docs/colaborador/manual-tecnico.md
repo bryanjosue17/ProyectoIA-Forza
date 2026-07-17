@@ -119,11 +119,11 @@ El colaborador puede leer los comunicados internos publicados por la administrac
 
 **Módulo:** Beneficios
 
-El colaborador puede ver los beneficios disponibles y canjearlos.
+El colaborador puede ver los beneficios corporativos disponibles (Salud, Educación, Alimentación, Transporte, etc.) publicados por RRHH. La vista es de solo lectura.
 
 ![](screenshots/07-beneficios.png)
 
-**API:** `POST /api/benefits/redeem`
+**API:** `GET /api/benefits`
 
 ---
 
@@ -131,11 +131,11 @@ El colaborador puede ver los beneficios disponibles y canjearlos.
 
 **Módulo:** Nómina
 
-El colaborador puede consultar sus recibos de nómina.
+El colaborador puede consultar sus comprobantes de nómina. Incluye un filtro por tipo de comprobante (Comprobante de Pago, Bonificación, Adelanto, etc.).
 
 ![](screenshots/08-nomina.png)
 
-**API:** `GET /api/payroll/me`
+**API:** `GET /api/nomina/me`
 
 ---
 
@@ -151,14 +151,43 @@ Vista resumen con acceso a todos los módulos disponibles.
 
 | Método | Endpoint | Módulo | Propósito |
 |---|---|---|---|
+| `GET` | `/api/employees/me` | Perfil | Cargar datos del perfil |
 | `PUT` | `/api/employees/me` | Perfil | Actualizar datos del perfil |
 | `GET` | `/api/documents/me` | Documentos | Listar documentos personales |
 | `POST` | `/api/requests/vacation` | Solicitudes | Crear solicitud de vacaciones |
 | `POST` | `/api/requests/certificate` | Solicitudes | Crear solicitud de constancia |
-| `GET` | `/api/team/requests` | Mi Equipo | Ver solicitudes del equipo |
-| `GET` | `/api/announcements` | Comunicados | Listar comunicados |
-| `POST` | `/api/benefits/redeem` | Beneficios | Canjear un beneficio |
-| `GET` | `/api/payroll/me` | Nómina | Ver recibos de nómina |
+| `GET` | `/api/announcements` | Comunicados | Listar comunicados activos |
+| `GET` | `/api/benefits` | Beneficios | Listar beneficios disponibles |
+| `GET` | `/api/nomina/me` | Nómina | Ver comprobantes de nómina |
+
+---
+
+## Pruebas Automatizadas E2E
+
+### Resultado de la última ejecución
+
+| Test | Resultado | Duración | Fecha |
+|---|---|---|---|
+| Portal Colaborador — Full Flows (POM based) | ✅ 1 passed | 29.8s | 2026-07-17 |
+
+**Comando de ejecución:**
+```bash
+npx playwright test e2e-tests/full-flows.spec.js --headed
+```
+
+### Flujos cubiertos por los tests E2E
+
+| Paso | Módulo | Acción | Endpoint verificado |
+|---|---|---|---|
+| 1 | Login | Autenticación con Keycloak (`testmanager` / `test123`) | — |
+| 2 | Perfil | Editar teléfono, sede, contacto de emergencia → Guardar | `PUT /api/employees/me` |
+| 3 | Documentos | Buscar en tabla (`contrato`) | `GET /api/documents/me` |
+| 4 | Solicitudes | Crear vacaciones (fechas + motivo) + Crear constancia (tipo + motivo) | `POST /api/requests/vacation` + `POST /api/requests/certificate` |
+| 5 | Mi Equipo | Verificar disponibilidad (solo managers) | — |
+| 6 | Comunicados | Verificar listado | `GET /api/announcements` |
+| 7 | Beneficios | Verificar tarjetas de beneficios | `GET /api/benefits` |
+| 8 | Nómina | Verificar tabla de comprobantes | `GET /api/nomina/me` |
+| 9 | Dashboard | Navegar al dashboard | — |
 
 ---
 
