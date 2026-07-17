@@ -53,11 +53,15 @@ erDiagram
         string reviewed_by
     }
 
-    vouchers {
+    nomina {
         guid id PK
         string employee_id FK
+        string nomina_type
         string period
         string status
+        string file_url
+        string notes
+        datetime requested_at
         string file_url
         string reason
         datetime requested_at
