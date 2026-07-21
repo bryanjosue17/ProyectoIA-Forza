@@ -15,7 +15,7 @@ Este documento relaciona directamente los requisitos obligatorios exigidos en el
 | **Persistencia (PostgreSQL)** | `PeoplePortal-BackEnd/src/PeoplePortal.Infrastructure/Data/Migrations/`<br>`k8s/postgres.yaml` | Base de datos relacional con migraciones automáticas versionadas vía Entity Framework Core. |
 | **Arquitectura de Eventos (EDD)** | `PeoplePortal-BackEnd/k8s/nats.yaml`<br>`PeoplePortal-BackEnd/src/PeoplePortal.Infrastructure/Messaging/` | Bus de eventos usando NATS JetStream para publicación y consumo de mensajes asíncronos. |
 | **Kubernetes (Manifiestos)** | `k8s/` (Raíz)<br>`[Submódulos]/k8s/base/` + `k8s/overlays/` | Manifiestos con Kustomize: overlays `develop` (:develop images) y `production` (:main images). Infra global: namespace, secret, keycloak, postgres, nats, apisix. |
-| **Seguridad OWASP** | `docs/seguridad.md` | Documentación técnica con el mapeo del cumplimiento del top 10 de OWASP. |
+| **Seguridad OWASP** | [`docs/tecnico/seguridad.md`](./docs/tecnico/seguridad.md) | Documentación técnica con el mapeo del cumplimiento del top 10 de OWASP. |
 | **Catálogo de Prompts IA** | `docs/prompts/` | Colección estructurada de las interacciones y plantillas utilizadas con IA. |
 | **Cobertura de Tests (≥ 60%)** | `tests/` (en Backend y Frontends) | Pruebas unitarias para handlers y componentes. Ejecutadas y validadas en el CI/CD. |
 
@@ -31,4 +31,4 @@ Este documento relaciona directamente los requisitos obligatorios exigidos en el
 | **6. Guía de Despliegue y Runbook** | [`docs/tecnico/despliegue.md`](./docs/tecnico/despliegue.md) |
 | **7. Seguridad y OWASP** | [`docs/tecnico/seguridad.md`](./docs/tecnico/seguridad.md) |
 | **8. Matriz de Cumplimiento (Anexo B)** | Al final del archivo [`README.md`](./README.md#matriz-de-cumplimiento-anexo-b) |
-| **9. Video Demo (5-8 min)** | ✅ [Ver video demo](./docs/proyecto/video-demo.md) |
+| **9. Video Demo (~20 min)** | ✅ [Ver video demo](./docs/proyecto/video-demo.md) |

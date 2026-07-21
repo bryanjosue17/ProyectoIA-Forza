@@ -49,7 +49,7 @@ Este plan cubre de forma integral:
 
 | # | Tema | Estado | Acción siguiente |
 |---|------|--------|------------------|
-| 1 | Video demo 5-8 min | ✅ | [Ver video demo](./video-demo.md) |
+| 1 | Video demo 5-8 min | ✅ | [Ver video demo](./video-demo.md) (~20 min) |
 | 2 | Repositorio privado en organización Forza | ⚠️ | Crear/usar org y transferir 4 repos |
 | 3 | Codacy (issues críticos/altos en 0) validado formalmente | ⚠️ | Revisar dashboard final por repo |
 | 4 | Deploy automático a K8s desde CI | ⚠️ | **Build + push a GHCR = automatizado por CI** ✅. Deploy al cluster K8s = manual (`.\deploy\deploy.ps1`) porque GitHub Actions no tiene acceso al cluster Docker Desktop local. El script obtiene el SHA del último CI y aplica las imágenes de GHCR automáticamente. |

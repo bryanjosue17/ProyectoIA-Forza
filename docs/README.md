@@ -43,7 +43,7 @@ Estado e hitos del proyecto.
 | Documento | Descripción |
 |---|---|
 | [proyecto/plan-implementacion.md](./proyecto/plan-implementacion.md) | Checklist de completado, pendientes y criterio de cierre |
-| [proyecto/video-demo.md](./proyecto/video-demo.md) | Enlace al video demostrativo (5–8 min) |
+| [proyecto/video-demo.md](./proyecto/video-demo.md) | Enlace al video demostrativo (~20 min) |
 
 ---
 

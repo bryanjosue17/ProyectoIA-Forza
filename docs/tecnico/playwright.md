@@ -262,8 +262,8 @@ El Trace Viewer muestra:
 
 ## Documentación Relacionada
 
-- Manual Técnico RRHH: [`docs/rrhh/manual-tecnico.md`](./rrhh/manual-tecnico.md)
-- Manual Técnico Colaborador: [`docs/colaborador/manual-tecnico.md`](./colaborador/manual-tecnico.md)
-- Guía de despliegue: [`docs/despliegue.md`](./despliegue.md)
-- Arquitectura global: [`docs/arquitectura.md`](./arquitectura.md)
+- Manual Técnico RRHH: [`docs/manuales/rrhh.md`](../manuales/rrhh.md)
+- Manual Técnico Colaborador: [`docs/manuales/colaborador.md`](../manuales/colaborador.md)
+- Guía de despliegue: [`docs/tecnico/despliegue.md`](./despliegue.md)
+- Arquitectura global: [`docs/tecnico/arquitectura.md`](./arquitectura.md)
 - Referencia oficial: [https://playwright.dev/docs/intro](https://playwright.dev/docs/intro)
