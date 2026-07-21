@@ -23,6 +23,6 @@ El video demuestra el flujo completo del sistema PeoplePortal en funcionamiento 
 
 ## Referencias
 
-- [README principal](../README.md)
-- [Guía de despliegue](./despliegue.md)
-- [Arquitectura del sistema](./arquitectura.md)
+- [README principal](../../README.md)
+- [Guía de despliegue](../tecnico/despliegue.md)
+- [Arquitectura del sistema](../tecnico/arquitectura.md)
