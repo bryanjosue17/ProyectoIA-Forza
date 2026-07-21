@@ -1,7 +1,17 @@
-# PeoplePortal — Documentación Global
+# docs/ — Índice de Documentación
 
-Índice de toda la documentación del repositorio raíz.  
-Cada submódulo tiene su propia carpeta `docs/` con documentación específica.
+Para la descripción completa del proyecto ver [`/README.md`](../README.md).
+
+```
+docs/
+├── tecnico/          arquitectura, base-de-datos, despliegue, flujos, seguridad, playwright
+├── proyecto/         plan-implementacion, video-demo
+├── manuales/         rrhh, colaborador
+├── propuesta/        Brief PDF+DOCX, entregables-finales PDF
+├── adr/              001-react-en-lugar-de-angular
+└── prompts/          catálogo de prompts por categoría
+```
+
 
 | Submódulo | Documentación interna |
 |---|---|
