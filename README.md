@@ -26,11 +26,11 @@ Este repositorio es un **monorepo** que gestiona tres subproyectos independiente
 
 Ver [`docs/`](./docs/README.md) para la documentación de infraestructura y arquitectura del sistema completo:
 
-- [Arquitectura global](./docs/arquitectura.md) — diagrama de sistema, puertos K8s y roles
-- [Guía de despliegue](./docs/despliegue.md) — GHCR, K8s, scripts y CI/CD
-- [Pruebas E2E](./docs/playwright.md) — Playwright, flujos, screenshots
-- [Video demo](./docs/video-demo.md) — walkthrough funcional completo (5–8 min)
-- [Plan de implementación](./docs/plan-implementacion.md) — estado del proyecto
+- [Arquitectura global](./docs/tecnico/arquitectura.md) — diagrama de sistema, puertos K8s y roles
+- [Guía de despliegue](./docs/tecnico/despliegue.md) — GHCR, K8s, scripts y CI/CD
+- [Pruebas E2E](./docs/tecnico/playwright.md) — Playwright, flujos, screenshots
+- [Video demo](./docs/proyecto/video-demo.md) — walkthrough funcional completo (5–8 min)
+- [Plan de implementación](./docs/proyecto/plan-implementacion.md) — estado del proyecto
 - [ADR-001: React vs Angular](./docs/adr/001-react-en-lugar-de-angular.md) — decisión de stack
 
 ---
@@ -134,7 +134,7 @@ Este proyecto se despliega mediante un script automatizado que obtiene las imág
    - Keycloak Admin: [http://localhost:30080/admin](http://localhost:30080/admin) — `admin` / `admin`
    - API Swagger: `http://localhost:30099/swagger/index.html`
 
-Para más detalles, opciones de entorno y despliegue manual, ver [docs/despliegue.md](./docs/despliegue.md).
+Para más detalles, opciones de entorno y despliegue manual, ver [docs/tecnico/despliegue.md](./docs/tecnico/despliegue.md).
 
 ---
 
@@ -156,7 +156,7 @@ El proyecto maneja los secretos a través de Kubernetes Secrets (`k8s/secret.yam
 ## Capturas de pantalla
 
 Las capturas de cada módulo se generan automáticamente al ejecutar los tests E2E con Playwright.
-Ver [`docs/playwright.md`](./docs/playwright.md) para instrucciones de ejecución y visualización de reportes.
+Ver [`docs/tecnico/playwright.md`](./docs/tecnico/playwright.md) para instrucciones de ejecución y visualización de reportes.
 
 ---
 
@@ -170,19 +170,39 @@ Ver [`docs/playwright.md`](./docs/playwright.md) para instrucciones de ejecució
 | Carpeta docs/prompts/ | ✅ Cumple | Catálogo de prompts incluido. |
 | Workflows CI/CD | ✅ Cumple | Github Actions configurado en submódulos. |
 | Despliegue automatizado | ✅ Cumple | Script `deploy.ps1` e infraestructura en `k8s/`. |
-| Arquitectura C4 | ✅ Cumple | Nivel 1 y 2 en `docs/arquitectura.md`. |
-| Mapeo OWASP Top 10 | ✅ Cumple | Ver `docs/seguridad.md`. |
-| Diagramas ER y Secuencia | ✅ Cumple | Ver `docs/base-de-datos.md` y `docs/flujos.md`. |
+| Arquitectura C4 | ✅ Cumple | Nivel 1 y 2 en [`docs/tecnico/arquitectura.md`](./docs/tecnico/arquitectura.md). |
+| Mapeo OWASP Top 10 | ✅ Cumple | Ver [`docs/tecnico/seguridad.md`](./docs/tecnico/seguridad.md). |
+| Diagramas ER y Secuencia | ✅ Cumple | Ver [`docs/tecnico/base-de-datos.md`](./docs/tecnico/base-de-datos.md) y [`docs/tecnico/flujos.md`](./docs/tecnico/flujos.md). |
 
 ---
 
 ## Estado del proyecto
 
-Ver [docs/plan-implementacion.md](./docs/plan-implementacion.md) para el estado completo.
+Ver [docs/proyecto/plan-implementacion.md](./docs/proyecto/plan-implementacion.md) para el estado completo.
 
 **Resumen:**
 - Backend + ambos frontends ✅ operativos con tests en verde
 - Cobertura global ≥ 60% ✅
 - Seguridad y autenticación activas ✅
 - Infraestructura K8s documentada ✅
-- Video demo ✅ — [ver video demo](./docs/video-demo.md)
+- Video demo ✅ — [ver video demo](./docs/proyecto/video-demo.md)
+
+---
+
+## Entregables del curso
+
+> Estudiante: Bryan Xol · Curso: Proyecto Curso I
+
+| Entregable | Estado | Ubicación |
+|---|---|---|
+| Repositorio GitHub | ✅ Listo | https://github.com/bryanjosue17/ProyectoIA-Forza |
+| README.md en raíz | ✅ Listo | Este archivo |
+| Arquitectura C4 | ✅ Listo | [`docs/tecnico/arquitectura.md`](./docs/tecnico/arquitectura.md) |
+| Diagramas de flujo | ✅ Listo | [`docs/tecnico/flujos.md`](./docs/tecnico/flujos.md) |
+| Esquema ER | ✅ Listo | [`docs/tecnico/base-de-datos.md`](./docs/tecnico/base-de-datos.md) |
+| Guía de despliegue | ✅ Listo | [`docs/tecnico/despliegue.md`](./docs/tecnico/despliegue.md) |
+| Seguridad OWASP | ✅ Listo | [`docs/tecnico/seguridad.md`](./docs/tecnico/seguridad.md) |
+| Catálogo de prompts | ✅ Listo | [`docs/prompts/`](./docs/prompts/) |
+| CI/CD Workflows | ✅ Listo | GitHub Actions en los 3 submódulos |
+| Propuesta Semana 1 (PDF) | ✅ Listo | [`docs/propuesta/Brief_Capstone_ForzaTechAcademy_v1.pdf`](./docs/propuesta/Brief_Capstone_ForzaTechAcademy_v1.pdf) |
+| Video Demo | ✅ Realizado | [`docs/proyecto/video-demo.md`](./docs/proyecto/video-demo.md) |

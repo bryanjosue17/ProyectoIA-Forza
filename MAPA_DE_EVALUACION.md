@@ -25,10 +25,10 @@ Este documento relaciona directamente los requisitos obligatorios exigidos en el
 |---|---|
 | **1. Documento de Propuesta (PDF/Word)** | [`docs/propuesta/Brief_Capstone_ForzaTechAcademy_v1.pdf`](./docs/propuesta/Brief_Capstone_ForzaTechAcademy_v1.pdf) |
 | **2. README.md Raíz** | [`README.md`](./README.md) |
-| **3. Diagrama de Arquitectura (C4)** | [`docs/arquitectura.md`](./docs/arquitectura.md) |
-| **4. Diagrama de Flujos (Secuencia)** | [`docs/flujos.md`](./docs/flujos.md) |
-| **5. Esquema de Base de Datos (ER)** | [`docs/base-de-datos.md`](./docs/base-de-datos.md) |
-| **6. Guía de Despliegue y Runbook** | [`docs/despliegue.md`](./docs/despliegue.md) |
-| **7. Seguridad y OWASP** | [`docs/seguridad.md`](./docs/seguridad.md) |
+| **3. Diagrama de Arquitectura (C4)** | [`docs/tecnico/arquitectura.md`](./docs/tecnico/arquitectura.md) |
+| **4. Diagrama de Flujos (Secuencia)** | [`docs/tecnico/flujos.md`](./docs/tecnico/flujos.md) |
+| **5. Esquema de Base de Datos (ER)** | [`docs/tecnico/base-de-datos.md`](./docs/tecnico/base-de-datos.md) |
+| **6. Guía de Despliegue y Runbook** | [`docs/tecnico/despliegue.md`](./docs/tecnico/despliegue.md) |
+| **7. Seguridad y OWASP** | [`docs/tecnico/seguridad.md`](./docs/tecnico/seguridad.md) |
 | **8. Matriz de Cumplimiento (Anexo B)** | Al final del archivo [`README.md`](./README.md#matriz-de-cumplimiento-anexo-b) |
-| **9. Video Demo (5-8 min)** | ✅ [Ver video demo](./docs/video-demo.md) |
+| **9. Video Demo (5-8 min)** | ✅ [Ver video demo](./docs/proyecto/video-demo.md) |
