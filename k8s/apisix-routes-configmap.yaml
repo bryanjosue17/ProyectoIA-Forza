@@ -28,7 +28,7 @@ data:
 
       - id: "3"
         uri: /api/hr*
-        methods: [GET, POST, PATCH, DELETE, OPTIONS]
+        methods: [GET, POST, PUT, PATCH, DELETE, OPTIONS]
         upstream_id: "backend"
 
       - id: "4"
@@ -58,7 +58,7 @@ data:
 
       - id: "9"
         uri: /api/nomina*
-        methods: [GET, POST, OPTIONS]
+        methods: [GET, POST, PATCH, OPTIONS]
         upstream_id: "backend"
 
       - id: "10"
