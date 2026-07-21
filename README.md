@@ -16,9 +16,9 @@ Este repositorio es un **monorepo** que gestiona tres subproyectos independiente
 
 | Subproyecto | Descripción | Documentación |
 |---|---|---|
-| [PeoplePortal-BackEnd](./PeoplePortal-BackEnd/README.md) | API REST .NET 9 — Clean Architecture + CQRS | [docs](./PeoplePortal-BackEnd/docs/README.md) |
-| [PeoplePortal-FrontEnd-Colaborador](./PeoplePortal-FrontEnd-Colaborador/README.md) | React 19 — Portal del empleado | [docs](./PeoplePortal-FrontEnd-Colaborador/docs/README.md) |
-| [PeoplePortal-FrontEnd-RRHH](./PeoplePortal-FrontEnd-RRHH/README.md) | React 19 — Panel administrativo RRHH | [docs](./PeoplePortal-FrontEnd-RRHH/docs/README.md) |
+| [PeoplePortal-BackEnd](https://github.com/bryanjosue17/PeoplePortal-BackEnd) | API REST .NET 9 — Clean Architecture + CQRS | [docs](https://github.com/bryanjosue17/PeoplePortal-BackEnd/tree/main/docs) |
+| [PeoplePortal-FrontEnd-Colaborador](https://github.com/bryanjosue17/PeoplePortal-FrontEnd-Colaborador) | React 19 — Portal del empleado | [docs](https://github.com/bryanjosue17/PeoplePortal-FrontEnd-Colaborador/tree/main/docs) |
+| [PeoplePortal-FrontEnd-RRHH](https://github.com/bryanjosue17/PeoplePortal-FrontEnd-RRHH) | React 19 — Panel administrativo RRHH | [docs](https://github.com/bryanjosue17/PeoplePortal-FrontEnd-RRHH/tree/main/docs) |
 
 ---
 
