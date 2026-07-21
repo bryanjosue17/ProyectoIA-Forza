@@ -1,7 +1,7 @@
 # Plan de Implementación General — PeoplePortal (Backend + Frontend + Infra)
 
 > Documento unificado (reemplaza el contenido de `PENDIENTE.md` y del plan anterior).  
-> Última actualización: 2026-07-03.
+> Última actualización: 2026-07-21.
 
 ## 1. Alcance del plan
 
@@ -20,7 +20,7 @@ Este plan cubre de forma integral:
 |---|------|--------|--------------------|
 | 1 | Arquitectura base (Clean + CQRS) | ✅ | Capas Domain/Application/Infrastructure/Api y MediatR activos |
 | 2 | Módulos funcionales MVP | ✅ | Perfil, documentos, comunicados, beneficios, solicitudes, dashboard, panel RRHH, reportes |
-| 3 | Autenticación y roles Keycloak | ✅ | JWT + PKCE S256 + políticas por rol |
+| 3 | Autenticación y roles Keycloak | ✅ | ROPC (Resource Owner Password Credentials) + JWT Bearer + políticas por rol |
 | 4 | NATS JetStream integrado | ✅ | Publicación/consumo de eventos en infraestructura |
 | 5 | PostgreSQL + migraciones versionadas | ✅ | Migraciones EF Core (PostgreSQL) aplicadas |
 | 6 | Kubernetes (manifiestos) | ✅ | Manifiestos globales y por subproyecto |
@@ -43,8 +43,7 @@ Este plan cubre de forma integral:
 | 23 | Iconos en títulos de todas las páginas | ✅ | Iconos MUI color="primary" en todos los h4/h5 de ambos frontends |
 | 24 | Charts interactivos en RRHH (Chart.js) | ✅ | Dashboard: Doughnut + Bar; Reportes: Doughnut, Bar H, Line, Bar agrupado |
 | 25 | PDFs de reportes refactorizados | ✅ | Tablas con %, barras visuales proporcionales, resúmenes, Reporte General 2 págs |
-| 26 | Módulo Nómina (renombrado + expandido) | ✅ | NominaType enum, Notes field, migración DB, rutas /api/nomina, página Colaborador y RRHH |
-| 27 | Módulo Gestión de Usuarios (Keycloak) | ✅ | IKeycloakAdminService, proxy RRHH, página UserManagement con roles/enable/reset-pw |
+| 26 | Módulo Gestión de Usuarios (Keycloak) | ✅ | IKeycloakAdminService, proxy RRHH, página UserManagement con roles/enable/reset-pw |
 
 ### 2.2 Pendiente / parcial
 

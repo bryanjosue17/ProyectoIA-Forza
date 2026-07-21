@@ -1,7 +1,12 @@
-# Plan de Implementación General — PeoplePortal (Backend + Frontend + Infra)
+# Plan de Implementación — PeoplePortal
 
-> Documento unificado (reemplaza el contenido de `PENDIENTE.md` y del plan anterior).  
-> Última actualización: 2026-06-30.
+> ⚠️ **Este archivo es una versión antigua y se mantiene solo por referencia histórica.**
+>
+> El documento canónico y actualizado es:
+> **[➔ plan-implementacion.md](./plan-implementacion.md)**
+
+Por favor consulta `plan-implementacion.md` para el estado actual del proyecto.
+
 
 ## 1. Alcance del plan
 
