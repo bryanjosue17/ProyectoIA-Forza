@@ -32,5 +32,13 @@ Cada submódulo tiene su propia carpeta `docs/` con su documentación interna:
 
 | Aplicación | Documento |
 |---|---|
-| Portal RRHH (Administración) | [`rrhh/manual-tecnico.md`](./rrhh/manual-tecnico.md) |
-| Portal Colaborador (Empleados) | [`colaborador/manual-tecnico.md`](./colaborador/manual-tecnico.md) |
+| Portal RRHH (Administración) | [`manuales/rrhh.md`](./manuales/rrhh.md) |
+| Portal Colaborador (Empleados) | [`manuales/colaborador.md`](./manuales/colaborador.md) |
+
+## Propuesta del curso
+
+| Archivo | Descripción |
+|---|---|
+| [`propuesta/Brief_Capstone_ForzaTechAcademy_v1.pdf`](./propuesta/Brief_Capstone_ForzaTechAcademy_v1.pdf) | Propuesta original del proyecto (PDF) |
+| [`propuesta/Brief_Capstone_ForzaTechAcademy_v1.docx`](./propuesta/Brief_Capstone_ForzaTechAcademy_v1.docx) | Propuesta original del proyecto (Word) |
+| [`propuesta/entregables-finales.pdf`](./propuesta/entregables-finales.pdf) | Documento de entregables finales del curso |
