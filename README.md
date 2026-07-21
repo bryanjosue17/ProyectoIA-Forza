@@ -29,7 +29,7 @@ Ver [`docs/`](./docs/README.md) para la documentación de infraestructura y arqu
 - [Arquitectura global](./docs/tecnico/arquitectura.md) — diagrama de sistema, puertos K8s y roles
 - [Guía de despliegue](./docs/tecnico/despliegue.md) — GHCR, K8s, scripts y CI/CD
 - [Pruebas E2E](./docs/tecnico/playwright.md) — Playwright, flujos, screenshots
-- [Video demo](./docs/proyecto/video-demo.md) — walkthrough funcional completo (5–8 min)
+- [Video demo](./docs/proyecto/video-demo.md) — walkthrough funcional completo (~20 min)
 - [Plan de implementación](./docs/proyecto/plan-implementacion.md) — estado del proyecto
 - [ADR-001: React vs Angular](./docs/adr/001-react-en-lugar-de-angular.md) — decisión de stack
 

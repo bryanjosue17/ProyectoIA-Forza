@@ -154,7 +154,7 @@ Ver reporte HTML con resultados y capturas por paso:
 npx playwright show-report
 ```
 
-Ver documentación completa en [`docs/playwright.md`](./playwright.md).
+Ver documentación completa en [`docs/tecnico/playwright.md`](./playwright.md).
 
 ## 7. URLs de acceso
 

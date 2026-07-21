@@ -4,7 +4,7 @@
 
 🎥 **[Ver video demostrativo](https://1drv.ms/v/c/1da8397487f6c670/IQDj3mseN8KsQrgYq93vCtX7Afy7cQfNQaI8CC3_MsRebk8?e=6WGI5f)**
 
-> Duración: 5–8 minutos  
+> Duración: ~20 minutos  
 > Hospedado en: OneDrive
 
 ---
