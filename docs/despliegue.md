@@ -166,6 +166,17 @@ Ver documentación completa en [`docs/playwright.md`](./playwright.md).
 | API (via APISIX) | http://localhost:30090/api |
 | API Swagger | http://localhost:30099/swagger/index.html |
 
+### Credenciales de acceso
+
+| Portal / Herramienta | Usuario | Contraseña | Roles |
+|---|---|---|---|
+| **Keycloak Admin Console** | `admin` | `admin` | — |
+| **Panel RRHH** | `admin` | `admin123` | `hr`, `admin` |
+| **Portal Colaborador** | `testmanager` | `test123` | `employee`, `jefe_inmediato` |
+
+> Las credenciales de prueba están preconfiguradas en el realm `peopleportal` que se importa automáticamente al arrancar Keycloak (`--import-realm`).  
+> Para crear usuarios adicionales: Keycloak Admin → Realm `peopleportal` → Users → Add user.
+
 ---
 
 ## 8. Limpiar entorno
