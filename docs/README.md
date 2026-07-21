@@ -7,9 +7,9 @@ Cada submódulo tiene su propia carpeta `docs/` con su documentación interna:
 
 | Subproyecto | Documentación |
 |---|---|
-| Backend (.NET 9) | [`PeoplePortal-BackEnd/docs/`](../PeoplePortal-BackEnd/docs/README.md) |
-| Frontend Colaborador (React 19) | [`PeoplePortal-FrontEnd-Colaborador/docs/`](../PeoplePortal-FrontEnd-Colaborador/docs/README.md) |
-| Frontend RRHH (React 19) | [`PeoplePortal-FrontEnd-RRHH/docs/`](../PeoplePortal-FrontEnd-RRHH/docs/README.md) |
+| Backend (.NET 9) | [PeoplePortal-BackEnd/docs/](https://github.com/bryanjosue17/PeoplePortal-BackEnd/tree/main/docs) |
+| Frontend Colaborador (React 19) | [PeoplePortal-FrontEnd-Colaborador/docs/](https://github.com/bryanjosue17/PeoplePortal-FrontEnd-Colaborador/tree/main/docs) |
+| Frontend RRHH (React 19) | [PeoplePortal-FrontEnd-RRHH/docs/](https://github.com/bryanjosue17/PeoplePortal-FrontEnd-RRHH/tree/main/docs) |
 
 ---
 

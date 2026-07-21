@@ -116,56 +116,46 @@ Para ejecutar este proyecto de forma local, necesitas tener instalados:
 
 ## Instrucciones para ejecutar el proyecto
 
-Este proyecto está diseñado para desplegarse fácilmente mediante un script automatizado que construye las imágenes y despliega todos los manifiestos en Kubernetes de forma local.
+Este proyecto se despliega mediante un script automatizado que obtiene las imágenes desde **GitHub Container Registry (GHCR)** y las aplica en Kubernetes local.
 
 1. Abre una terminal (Powershell) en la raíz del proyecto.
-2. Ejecuta el script de despliegue principal:
-   ```bash
+2. Ejecuta el script de despliegue:
+   ```powershell
    ./deploy/deploy.ps1
    ```
-3. El script creará el namespace `peopleportal` y desplegará:
-   - PostgreSQL (con persistencia PVC)
-   - NATS JetStream
-   - Keycloak (con configuración de realm pre-cargada)
-   - API Backend
-   - Frontend RRHH
-   - Frontend Colaborador
-   - APISIX (API Gateway + OIDC Plugin)
-
+   El script (sin parámetros) usa el entorno `develop` por defecto y obtiene las imágenes del último CI exitoso en GHCR.
+3. El script despliega automáticamente:
+   - PostgreSQL, NATS, Keycloak (con realm pre-configurado)
+   - API Backend, Frontend RRHH, Frontend Colaborador, APISIX
 4. **Acceso al sistema:**
-   - Portal Colaborador: [http://localhost:30081](http://localhost:30081)
-   - Portal RRHH: [http://localhost:30082](http://localhost:30082)
+   - Portal Colaborador: [http://localhost:30081](http://localhost:30081) — `testmanager` / `test123`
+   - Portal RRHH: [http://localhost:30082](http://localhost:30082) — `admin` / `admin123`
+   - Keycloak Admin: [http://localhost:30080/admin](http://localhost:30080/admin) — `admin` / `admin`
    - API Swagger: `http://localhost:30099/swagger/index.html`
-   - Keycloak Admin: [http://localhost:30080](http://localhost:30080) (user: `admin`, pass: `admin`)
+
+Para más detalles, opciones de entorno y despliegue manual, ver [docs/despliegue.md](./docs/despliegue.md).
 
 ---
 
-## Variables de entorno necesarias
+## Variables de entorno
 
-El proyecto maneja los secretos a través de Kubernetes Secrets (ver `k8s/secret.yaml`), pero a nivel de código se manejan las siguientes variables:
+El proyecto maneja los secretos a través de Kubernetes Secrets (`k8s/secret.yaml`). Las variables de entorno relevantes por capa son:
 
 **Backend (API):**
-- `ConnectionStrings__DefaultConnection`: Conexión a PostgreSQL.
-- `Jwt__Authority`: URL de Keycloak (`http://keycloak.peopleportal.svc.cluster.local:8080/realms/peopleportal`).
-- `Jwt__Audience`: `account`.
+- `ConnectionStrings__DefaultConnection` — cadena de conexión a PostgreSQL
+- `Authentication__Authority` — URL del realm Keycloak (`http://keycloak-service:8080/realms/peopleportal`)
+- `Authentication__Audience` — `peopleportal-api`
 
 **Frontends (Vite):**
-- `VITE_KEYCLOAK_URL`: `http://localhost:30080`
-- `VITE_KEYCLOAK_REALM`: `peopleportal`
-- `VITE_KEYCLOAK_CLIENT_ID`: `peopleportal-frontend` (Colaborador) o `peopleportal-hr-frontend` (RRHH)
-- `VITE_API_BASE_URL`: `http://localhost:30090` (APISIX Gateway)
+- `VITE_KEYCLOAK_URL` — URL del servidor Keycloak (ej. `http://localhost:30080`)
+- `VITE_API_URL` — Base URL de la API (vacío = misma origin, el nginx hace proxy de `/api/`)
 
 ---
 
 ## Capturas de pantalla
 
-> **Nota:** Puedes agregar tus capturas de pantalla aquí demostrando el sistema en funcionamiento.
-
-- **Dashboard RRHH:**
-  ![Dashboard RRHH](docs/assets/dashboard_rrhh.png) <!-- TODO: Sube tu captura a esta ruta -->
-
-- **Portal Colaborador:**
-  ![Portal Colaborador](docs/assets/portal_colaborador.png) <!-- TODO: Sube tu captura a esta ruta -->
+Las capturas de cada módulo se generan automáticamente al ejecutar los tests E2E con Playwright.
+Ver [`docs/playwright.md`](./docs/playwright.md) para instrucciones de ejecución y visualización de reportes.
 
 ---
 
