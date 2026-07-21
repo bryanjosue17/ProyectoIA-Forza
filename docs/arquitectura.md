@@ -154,6 +154,6 @@ ProyectoIA-Forza/
 
 | Subproyecto | Documentación técnica |
 |---|---|
-| Backend | [PeoplePortal-BackEnd/docs/](../PeoplePortal-BackEnd/docs/README.md) |
-| Frontend Colaborador | [PeoplePortal-FrontEnd-Colaborador/docs/](../PeoplePortal-FrontEnd-Colaborador/docs/README.md) |
-| Frontend RRHH | [PeoplePortal-FrontEnd-RRHH/docs/](../PeoplePortal-FrontEnd-RRHH/docs/README.md) |
+| Backend | [PeoplePortal-BackEnd/docs/](https://github.com/bryanjosue17/PeoplePortal-BackEnd/tree/main/docs) |
+| Frontend Colaborador | [PeoplePortal-FrontEnd-Colaborador/docs/](https://github.com/bryanjosue17/PeoplePortal-FrontEnd-Colaborador/tree/main/docs) |
+| Frontend RRHH | [PeoplePortal-FrontEnd-RRHH/docs/](https://github.com/bryanjosue17/PeoplePortal-FrontEnd-RRHH/tree/main/docs) |
