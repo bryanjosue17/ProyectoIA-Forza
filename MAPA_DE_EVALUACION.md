@@ -31,4 +31,4 @@ Este documento relaciona directamente los requisitos obligatorios exigidos en el
 | **6. Guía de Despliegue y Runbook** | [`docs/despliegue.md`](./docs/despliegue.md) |
 | **7. Seguridad y OWASP** | [`docs/seguridad.md`](./docs/seguridad.md) |
 | **8. Matriz de Cumplimiento (Anexo B)** | Al final del archivo [`README.md`](./README.md#matriz-de-cumplimiento-anexo-b) |
-| **9. Video Demo (5-8 min)** | Pendiente de agregar en el `README.md` |
+| **9. Video Demo (5-8 min)** | ✅ [Ver video demo](./docs/video-demo.md) |

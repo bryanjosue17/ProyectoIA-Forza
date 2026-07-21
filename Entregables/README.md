@@ -193,5 +193,4 @@ Ver [docs/plan-implementacion.md](./docs/plan-implementacion.md) para el estado 
 - Cobertura global ≥ 60% ✅
 - Seguridad y autenticación activas ✅
 - Infraestructura K8s documentada ✅
-- Video demo pendiente ❌
-- Repos en organización Forza pendiente ⚠️
+- Video demo ✅ — [ver video demo](../docs/video-demo.md)

@@ -77,8 +77,8 @@ Catálogo de prompts utilizados durante el desarrollo:
 ## 5. Video Demo
 
 🎥 **Enlace del video demostrativo:**  
-> ⚠️ **PENDIENTE** — Agregar el enlace del video demo aquí.  
-> Duración esperada: entre 5 y 8 minutos.
+[https://1drv.ms/v/c/1da8397487f6c670/IQDj3mseN8KsQrgYq93vCtX7Afy7cQfNQaI8CC3_MsRebk8?e=6WGI5f](https://1drv.ms/v/c/1da8397487f6c670/IQDj3mseN8KsQrgYq93vCtX7Afy7cQfNQaI8CC3_MsRebk8?e=6WGI5f)  
+> Duración: 5–8 minutos. Hospedado en OneDrive.
 
 ---
 
@@ -96,5 +96,5 @@ Catálogo de prompts utilizados durante el desarrollo:
 | `docs/prompts/` | ✅ Listo | Catálogo completo (11 archivos en 10 categorías) |
 | CI/CD Workflows | ✅ Listo | GitHub Actions en los 3 submódulos |
 | Propuesta Semana 1 (PDF) | ✅ Listo | Convertido a PDF exitosamente |
-| Video Demo | ❌ Pendiente | Grabar video de 5–8 minutos |
+| Video Demo | ✅ Realizado | [Ver video demo](../docs/video-demo.md) |
 | Capturas de pantalla | ⚠️ Pendiente | Agregar en README.md |
