@@ -23,7 +23,7 @@ Este documento relaciona directamente los requisitos obligatorios exigidos en el
 
 | Entregable Documental | Enlace al Archivo |
 |---|---|
-| **1. Documento de Propuesta (PDF/Word)** | [`Entregables/Brief_Capstone_ForzaTechAcademy_v1.pdf`](./Entregables/Brief_Capstone_ForzaTechAcademy_v1.pdf) |
+| **1. Documento de Propuesta (PDF/Word)** | [`docs/Brief_Capstone_ForzaTechAcademy_v1.pdf`](./docs/Brief_Capstone_ForzaTechAcademy_v1.pdf) |
 | **2. README.md Raíz** | [`README.md`](./README.md) |
 | **3. Diagrama de Arquitectura (C4)** | [`docs/arquitectura.md`](./docs/arquitectura.md) |
 | **4. Diagrama de Flujos (Secuencia)** | [`docs/flujos.md`](./docs/flujos.md) |

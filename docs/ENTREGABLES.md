@@ -1,13 +1,8 @@
-# Entregables Finales — Proyecto Curso IA
-## PeoplePortal: Portal del Colaborador
+# Entregables Finales — PeoplePortal
 
 > **Estudiante:** Bryan Xol  
 > **Curso:** Proyecto Curso I  
 > **Fecha de entrega:** Semana Final
-
----
-
-## 1. Repositorio en GitHub
 
 🔗 **Enlace del repositorio:**  
 https://github.com/bryanjosue17/ProyectoIA-Forza
@@ -24,7 +19,7 @@ El repositorio contiene:
 
 ## 2. README.md
 
-📄 Ver [`README.md`](./README.md) — incluye:
+📄 Ver [`README.md`](../README.md) — incluye:
 - Descripción del proyecto
 - Objetivo del sistema
 - Prerrequisitos
@@ -40,11 +35,11 @@ El repositorio contiene:
 
 | Archivo | Contenido |
 |---|---|
-| [`docs/arquitectura.md`](./docs/arquitectura.md) | Diagrama C4 Nivel 1 y C4 Nivel 2 (Contenedores) |
-| [`docs/flujos.md`](./docs/flujos.md) | Diagramas de secuencia del flujo principal |
-| [`docs/base-de-datos.md`](./docs/base-de-datos.md) | Modelo Entidad-Relación (ER Diagram) |
-| [`docs/despliegue.md`](./docs/despliegue.md) | Pipeline CI/CD, proceso de despliegue y Runbook |
-| [`docs/seguridad.md`](./docs/seguridad.md) | Mapeo OWASP Top 10 |
+| [`arquitectura.md`](./arquitectura.md) | Diagrama C4 Nivel 1 y C4 Nivel 2 (Contenedores) |
+| [`flujos.md`](./flujos.md) | Diagramas de secuencia del flujo principal |
+| [`base-de-datos.md`](./base-de-datos.md) | Modelo Entidad-Relación (ER Diagram) |
+| [`despliegue.md`](./despliegue.md) | Pipeline CI/CD, proceso de despliegue y Runbook |
+| [`seguridad.md`](./seguridad.md) | Mapeo OWASP Top 10 |
 
 ### `docs/prompts/`
 
@@ -52,17 +47,17 @@ Catálogo de prompts utilizados durante el desarrollo:
 
 | Categoría | Archivo |
 |---|---|
-| Arquitectura | [`docs/prompts/arquitectura/diagrama-c4.md`](./docs/prompts/arquitectura/diagrama-c4.md) |
-| Arquitectura | [`docs/prompts/arquitectura/diseno-entidades.md`](./docs/prompts/arquitectura/diseno-entidades.md) |
-| Backend | [`docs/prompts/backend/cqrs-handlers.md`](./docs/prompts/backend/cqrs-handlers.md) |
-| Base de Datos | [`docs/prompts/base-de-datos/schema-y-seed.md`](./docs/prompts/base-de-datos/schema-y-seed.md) |
-| CI/CD | [`docs/prompts/ci-cd/pipelines.md`](./docs/prompts/ci-cd/pipelines.md) |
-| Docker | [`docs/prompts/docker/dockerfiles.md`](./docs/prompts/docker/dockerfiles.md) |
-| Frontend Colaborador | [`docs/prompts/frontend-colaborador/paginas-y-componentes.md`](./docs/prompts/frontend-colaborador/paginas-y-componentes.md) |
-| Frontend RRHH | [`docs/prompts/frontend-rrhh/paginas-y-componentes.md`](./docs/prompts/frontend-rrhh/paginas-y-componentes.md) |
-| Kubernetes | [`docs/prompts/kubernetes/manifiestos.md`](./docs/prompts/kubernetes/manifiestos.md) |
-| Seguridad | [`docs/prompts/seguridad/owasp.md`](./docs/prompts/seguridad/owasp.md) |
-| Tests | [`docs/prompts/tests/pruebas.md`](./docs/prompts/tests/pruebas.md) |
+| Arquitectura | [`prompts/arquitectura/diagrama-c4.md`](./prompts/arquitectura/diagrama-c4.md) |
+| Arquitectura | [`prompts/arquitectura/diseno-entidades.md`](./prompts/arquitectura/diseno-entidades.md) |
+| Backend | [`prompts/backend/cqrs-handlers.md`](./prompts/backend/cqrs-handlers.md) |
+| Base de Datos | [`prompts/base-de-datos/schema-y-seed.md`](./prompts/base-de-datos/schema-y-seed.md) |
+| CI/CD | [`prompts/ci-cd/pipelines.md`](./prompts/ci-cd/pipelines.md) |
+| Docker | [`prompts/docker/dockerfiles.md`](./prompts/docker/dockerfiles.md) |
+| Frontend Colaborador | [`prompts/frontend-colaborador/paginas-y-componentes.md`](./prompts/frontend-colaborador/paginas-y-componentes.md) |
+| Frontend RRHH | [`prompts/frontend-rrhh/paginas-y-componentes.md`](./prompts/frontend-rrhh/paginas-y-componentes.md) |
+| Kubernetes | [`prompts/kubernetes/manifiestos.md`](./prompts/kubernetes/manifiestos.md) |
+| Seguridad | [`prompts/seguridad/owasp.md`](./prompts/seguridad/owasp.md) |
+| Tests | [`prompts/tests/pruebas.md`](./prompts/tests/pruebas.md) |
 
 ---
 
@@ -96,5 +91,5 @@ Catálogo de prompts utilizados durante el desarrollo:
 | `docs/prompts/` | ✅ Listo | Catálogo completo (11 archivos en 10 categorías) |
 | CI/CD Workflows | ✅ Listo | GitHub Actions en los 3 submódulos |
 | Propuesta Semana 1 (PDF) | ✅ Listo | Convertido a PDF exitosamente |
-| Video Demo | ✅ Realizado | [Ver video demo](../docs/video-demo.md) |
+| Video Demo | ✅ Realizado | [Ver video demo](./video-demo.md) |
 | Capturas de pantalla | ⚠️ Pendiente | Agregar en README.md |

@@ -18,9 +18,14 @@ Cada submódulo tiene su propia carpeta `docs/` con su documentación interna:
 | Documento | Descripción |
 |---|---|
 | [arquitectura.md](./arquitectura.md) | Diagrama del sistema completo: componentes, puertos K8s, roles Keycloak |
+| [base-de-datos.md](./base-de-datos.md) | Modelo Entidad-Relación (ER Diagram) |
+| [flujos.md](./flujos.md) | Diagramas de secuencia: login, solicitudes, aprobaciones |
 | [despliegue.md](./despliegue.md) | Guía de despliegue end-to-end: build → K8s → verificación |
+| [seguridad.md](./seguridad.md) | Mapeo OWASP Top 10 |
 | [playwright.md](./playwright.md) | Pruebas E2E con Playwright: instalación, ejecución, POM, capturas |
+| [video-demo.md](./video-demo.md) | Video demostrativo del sistema en funcionamiento (5–8 min) |
 | [plan-implementacion.md](./plan-implementacion.md) | Estado del proyecto: completado, pendiente y criterios de cierre |
+| [ENTREGABLES.md](./ENTREGABLES.md) | Checklist de entregables del curso con enlaces a artefactos |
 | [adr/001-react-en-lugar-de-angular.md](./adr/001-react-en-lugar-de-angular.md) | Decision Record: por qué se usa React 19 en lugar de Angular |
 
 ## Manuales técnicos por aplicación
