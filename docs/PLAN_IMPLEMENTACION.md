@@ -36,7 +36,7 @@ Este plan cubre de forma integral:
 
 | # | Tema | Estado | Acción siguiente |
 |---|------|--------|------------------|
-| 1 | Video demo 5-8 min | ❌ | Grabar walkthrough funcional completo |
+| 1 | Video demo 5-8 min | ✅ | [Ver video demo](./video-demo.md) |
 | 2 | Repositorio privado en organización Forza | ⚠️ | Crear/usar org y transferir 4 repos |
 | 3 | Codacy (issues críticos/altos en 0) validado formalmente | ⚠️ | Revisar dashboard final por repo |
 | 4 | Deploy automático a K8s desde CI | ❌ | Definir runner con acceso al cluster o estrategia CD alternativa |
@@ -60,7 +60,7 @@ En esta sección se responde explícitamente: "lo del plan anterior ya se realiz
 | Suite de tests funcionales backend + frontends | ✅ Realizado |
 | Meta cobertura >= 60% | ✅ Realizado (global consolidado) |
 | Integraciones avanzadas pendientes (flujos e2e completos con contenedores en CI) | ⚠️ Parcial |
-| Video demo del proyecto | ❌ No realizado |
+| Video demo del proyecto | ✅ Realizado — [ver video](./video-demo.md) |
 
 ## 4. Estado por capa (general)
 
@@ -100,9 +100,8 @@ En esta sección se responde explícitamente: "lo del plan anterior ya se realiz
 ## 5. Riesgos y siguientes pasos recomendados
 
 1. Formalizar cierre de calidad en Codacy por los 3 repos de código.
-2. Grabar video demo técnico-funcional (5-8 min).
-3. Mover repos a organización Forza (privado) y confirmar políticas.
-4. Definir estrategia de CD real (GitHub Actions -> entorno destino).
+2. Mover repos a organización Forza (privado) y confirmar políticas.
+3. Definir estrategia de CD real (GitHub Actions -> entorno destino).
 
 ## 6. Criterio de cierre de implementación
 

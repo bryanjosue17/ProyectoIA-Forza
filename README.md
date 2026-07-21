@@ -29,6 +29,7 @@ Ver [`docs/`](./docs/README.md) para la documentación de infraestructura y arqu
 - [Arquitectura global](./docs/arquitectura.md) — diagrama de sistema, puertos K8s y roles
 - [Guía de despliegue](./docs/despliegue.md) — GHCR, K8s, scripts y CI/CD
 - [Pruebas E2E](./docs/playwright.md) — Playwright, flujos, screenshots
+- [Video demo](./docs/video-demo.md) — walkthrough funcional completo (5–8 min)
 - [Plan de implementación](./docs/plan-implementacion.md) — estado del proyecto
 - [ADR-001: React vs Angular](./docs/adr/001-react-en-lugar-de-angular.md) — decisión de stack
 
@@ -184,5 +185,4 @@ Ver [docs/plan-implementacion.md](./docs/plan-implementacion.md) para el estado 
 - Cobertura global ≥ 60% ✅
 - Seguridad y autenticación activas ✅
 - Infraestructura K8s documentada ✅
-- Video demo pendiente ❌
-- Repos en organización Forza pendiente ⚠️
+- Video demo ✅ — [ver video demo](./docs/video-demo.md)
