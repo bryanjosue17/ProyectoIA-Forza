@@ -50,9 +50,8 @@ Este plan cubre de forma integral:
 | # | Tema | Estado | Acción siguiente |
 |---|------|--------|------------------|
 | 1 | Video demo 5-8 min | ✅ | [Ver video demo](./video-demo.md) (~20 min) |
-| 2 | Repositorio privado en organización Forza | ⚠️ | Crear/usar org y transferir 4 repos |
-| 3 | Codacy (issues críticos/altos en 0) validado formalmente | ⚠️ | Revisar dashboard final por repo |
-| 4 | Deploy automático a K8s desde CI | ⚠️ | **Build + push a GHCR = automatizado por CI** ✅. Deploy al cluster K8s = manual (`.\deploy\deploy.ps1`) porque GitHub Actions no tiene acceso al cluster Docker Desktop local. El script obtiene el SHA del último CI y aplica las imágenes de GHCR automáticamente. |
+| 2 | Codacy (issues críticos/altos en 0) validado formalmente | ⚠️ | Revisar dashboard final por repo |
+| 3 | Deploy automático a K8s desde CI | ⚠️ | **Build + push a GHCR = automatizado por CI** ✅. Deploy al cluster K8s = manual (`.\.deploy\deploy.ps1`) porque GitHub Actions no tiene acceso al cluster Docker Desktop local. El script obtiene el SHA del último CI y aplica las imágenes de GHCR automáticamente. |
 
 ## 3. Validación de temas del plan anterior
 
@@ -113,8 +112,7 @@ En esta sección se responde explícitamente: "lo del plan anterior ya se realiz
 ## 5. Riesgos y siguientes pasos recomendados
 
 1. Formalizar cierre de calidad en Codacy por los 3 repos de código.
-2. Mover repos a organización Forza (privado) y confirmar políticas.
-3. Definir estrategia de CD real (GitHub Actions -> entorno destino).
+2. Definir estrategia de CD real (GitHub Actions -> entorno destino).
 
 ## 6. Criterio de cierre de implementación
 
