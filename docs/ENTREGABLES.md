@@ -63,9 +63,9 @@ Catálogo de prompts utilizados durante el desarrollo:
 
 ## 4. Propuesta (Semana 1)
 
-📄 [`Brief_Capstone_ForzaTechAcademy_v1.pdf`](./Brief_Capstone_ForzaTechAcademy_v1.pdf)
+📄 [`Brief_Capstone_ForzaTechAcademy_v1.pdf`](./propuesta/Brief_Capstone_ForzaTechAcademy_v1.pdf)
 
-> **Nota:** La propuesta original en formato `.docx` ha sido convertida a PDF exitosamente para la entrega final.
+> **Nota:** La propuesta original en formato `.docx` también está disponible: [`Brief_Capstone_ForzaTechAcademy_v1.docx`](./propuesta/Brief_Capstone_ForzaTechAcademy_v1.docx)
 
 ---
 
