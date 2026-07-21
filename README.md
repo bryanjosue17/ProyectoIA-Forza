@@ -155,8 +155,11 @@ El proyecto maneja los secretos a través de Kubernetes Secrets (`k8s/secret.yam
 
 ## Capturas de pantalla
 
-Las capturas de cada módulo se generan automáticamente al ejecutar los tests E2E con Playwright.
-Ver [`docs/tecnico/playwright.md`](./docs/tecnico/playwright.md) para instrucciones de ejecución y visualización de reportes.
+Las capturas de pantalla de cada módulo están incluidas en los manuales técnicos:
+- [Manual RRHH](./docs/manuales/rrhh.md)
+- [Manual Colaborador](./docs/manuales/colaborador.md)
+
+Para capturas generadas automáticamente vía tests E2E, ver [`docs/tecnico/playwright.md`](./docs/tecnico/playwright.md).
 
 ---
 
